@@ -1,15 +1,16 @@
 import React, { useEffect, useContext, useState } from 'react';
+// import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import tokenStorage from '../services/tokenStorage';
 
-function Login() {
+function Login(/* { history } */) {
   const { email, setEmail, password, setPassword } = useContext(RecipesContext);
   const [disable, setDisable] = useState(true);
 
   useEffect(() => {
     function validUser() {
       const MAX_LENGTH_PASSWORD = 6;
-      const isValidPassword = password.length >= MAX_LENGTH_PASSWORD;
+      const isValidPassword = password.length > MAX_LENGTH_PASSWORD;
       const isValidEmail = email
         .match(/[\w.!#$%&'*+=?^_`{|}~-]+@[\w.-]+\.[A-Z]{2,}/gmi);
       if (isValidEmail && isValidPassword) {
@@ -55,5 +56,11 @@ function Login() {
     </section>
   );
 }
-
+/*
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+*/
 export default Login;
