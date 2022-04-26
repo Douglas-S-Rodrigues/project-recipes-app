@@ -2,11 +2,12 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RecipesProvider from './context/RecipesProvider';
+import Footer from './Components/Footer';
 
 function App() {
   return (
     <RecipesProvider>
-      <h1>Receitas</h1>
+      <Footer />
     </RecipesProvider>
 
   );
