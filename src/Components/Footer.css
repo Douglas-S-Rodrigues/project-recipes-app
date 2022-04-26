@@ -1,0 +1,14 @@
+.footer {
+  background-color: #ffe600;
+  bottom: 0;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  padding: 1em 0;
+  position: fixed;
+  width: 100vw;
+}
+
+.footer, .footer-icons {
+  align-items: center;
+  display: flex;
+}

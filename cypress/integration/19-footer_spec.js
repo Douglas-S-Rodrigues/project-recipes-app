@@ -166,7 +166,7 @@ describe('23 - Redirecione a pessoa usuária para a tela de explorar ao clicar n
   });
 });
 
-describe('24 - Redirecione a pessoa usuárua para uma lista de comidas ao clicar no ícone de comidas', () => {
+describe.only('24 - Redirecione a pessoa usuárua para uma lista de comidas ao clicar no ícone de comidas', () => {
   it('Redireciona para a rota correta', () => {
     cy.visit('http://localhost:3000/drinks');
 
