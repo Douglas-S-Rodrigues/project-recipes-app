@@ -6,7 +6,6 @@ import RecipesProvider from './context/RecipesProvider';
 import Login from './Components/Login';
 import Recipes from './Components/Recipes';
 
-
 function App() {
   return (
     <RecipesProvider>
