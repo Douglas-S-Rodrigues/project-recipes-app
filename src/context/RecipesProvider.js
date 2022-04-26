@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const contextValue = {
-    user,
-    setUser,
+    email,
+    setEmail,
+    password,
+    setPassword,
   };
 
   return (
