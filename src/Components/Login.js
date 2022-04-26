@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import RecipesContext from '../context/RecipesContext';
+import tokenStorage from '../services/tokenStorage';
 
 function Login() {
   const { email, setEmail, password, setPassword } = useContext(RecipesContext);
@@ -20,6 +21,10 @@ function Login() {
 
     validUser();
   }, [email, password]);
+
+  function handleClick() {
+    tokenStorage(email);
+  }
 
   return (
     <section>
@@ -43,6 +48,7 @@ function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ disable }
+        onClick={ () => handleClick() }
       >
         Enter
       </button>
