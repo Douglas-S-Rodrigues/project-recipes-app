@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import tokenStorage from '../services/tokenStorage';
+import Header from '../Components/Header';
 
 function Login() {
   const history = useHistory();
@@ -31,6 +32,7 @@ function Login() {
 
   return (
     <section>
+      <Header />
       <input
         type="email"
         placeholder="Email"
