@@ -1,0 +1,24 @@
+.search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px;
+}
+
+.search-input {
+  width: 100%;
+}
+
+.search-buttons {
+  display: flex;
+  justify-content: space-between;
+  row-gap: 8px;
+}
+
+.search-radio-btn {
+  margin-right: 4px;
+}
+
+label {
+  margin: 0;
+}

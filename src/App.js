@@ -7,14 +7,17 @@ import RecipesProvider from './context/RecipesProvider';
 
 import Login from './Components/Login';
 import Foods from './Components/Foods';
+import { SearchItensProvider } from './context/SearchItemsProvider';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <RecipesProvider>
-          <Route path="/foods" component={ Foods } />
-          <Route exact path="/" component={ Login } />
+          <SearchItensProvider>
+            <Route path="/foods" component={ Foods } />
+            <Route exact path="/" component={ Login } />
+          </SearchItensProvider>
         </RecipesProvider>
       </Switch>
     </BrowserRouter>
