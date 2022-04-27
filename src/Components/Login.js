@@ -1,9 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
-// import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import tokenStorage from '../services/tokenStorage';
 
-function Login(/* { history } */) {
+function Login() {
+  const history = useHistory();
   const { email, setEmail, password, setPassword } = useContext(RecipesContext);
   const [disable, setDisable] = useState(true);
 
@@ -25,6 +26,7 @@ function Login(/* { history } */) {
 
   function handleClick() {
     tokenStorage(email);
+    history.push('/Recipes');
   }
 
   return (
@@ -56,11 +58,5 @@ function Login(/* { history } */) {
     </section>
   );
 }
-/*
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
-*/
+
 export default Login;
