@@ -6,12 +6,14 @@ import { Switch, Route } from 'react-router-dom';
 import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
+import Profile from './pages/Profile';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <RecipesProvider>
+          <Route path="/profile" component={ Profile } />
           <Route path="/foods" component={ Foods } />
           <Route exact path="/" component={ Login } />
         </RecipesProvider>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import './Header.css';
 
-function Header() {
+function Header({ title }) {
   const [disableInput, setDisableInput] = useState(false);
   const history = useHistory();
 
@@ -30,7 +31,7 @@ function Header() {
         >
           <img src={ profileIcon } alt="profileIcon" />
         </button>
-        <h1 data-testid="page-title">Foods</h1>
+        <h1 data-testid="page-title">{ title }</h1>
         <button
           type="button"
           data-testid="search-top-btn"
@@ -39,9 +40,19 @@ function Header() {
           <img src={ searchIcon } alt="searchIcon" />
         </button>
       </div>
-      { disableInput && <input type="text" placeholder="Buscar" className="input" /> }
+      { disableInput
+        && <input
+          type="text"
+          placeholder="Buscar"
+          className="input"
+          data-testid="search-input"
+        />}
     </header>
   );
 }
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default Header;
