@@ -1,8 +1,9 @@
 .header {
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
 }
+
 .input {
-  margin:2px;
+  margin: 2px;
   width: 90%;
 }
