@@ -26,7 +26,7 @@ function Login() {
 
   function handleClick() {
     tokenStorage(email);
-    history.push('/Recipes');
+    history.push('/foods');
   }
 
   return (
