@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSearchBar } from '../../context/SearchItemsProvider';
-// import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import RecipesContext from '../../context/RecipesContext';
+
 import './SearchBar.css';
 
 function SearchBar() {
-  const { searchItem } = useSearchBar();
+  const { searchItem } = useContext(RecipesContext);
   return (
     <form onSubmit={ searchItem } className="search-container">
       <input
