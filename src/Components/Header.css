@@ -1,10 +1,6 @@
 .header {
-  background-color: #ffe600;
   display: flex;
-  flex-flow: row nowrap;
   justify-content: space-around;
-  padding: 1em 0;
-  width: 100vw;
 }
 
 .input {
