@@ -42,7 +42,7 @@ function SearchBar() {
             className="search-radio-btn"
             data-testid="first-letter-search-radio"
             type="radio"
-            id="firstletter"
+            id="first-letter"
             name="searchType"
             value="f"
           />
