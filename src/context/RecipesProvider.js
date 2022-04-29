@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import getFoods from '../services/apiFood';
+import getDrinks from '../services/apiDrink';
 
 import RecipesContext from './RecipesContext';
 
@@ -7,6 +9,18 @@ function RecipesProvider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [itens, setItens] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const [drinkState, setDrinkState] = useState([]);
+
+  async function getApiFoods() {
+    const { meals } = await getFoods();
+    setFoods(meals);
+  }
+
+  async function getApiDrinks() {
+    const { drinks } = await getDrinks();
+    setDrinkState(drinks);
+  }
 
   async function searchItem(event) {
     event.preventDefault();
@@ -32,6 +46,12 @@ function RecipesProvider({ children }) {
     itens,
     setItens,
     searchItem,
+    getFoods,
+    getDrinks,
+    foods,
+    getApiFoods,
+    drinkState,
+    getApiDrinks,
   };
 
   return (
