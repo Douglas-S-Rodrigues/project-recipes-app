@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
-import FoodsRecipes from '../Components/FoodsRecipes';
+import DrinksRecipes from '../Components/DrinksRecipes';
 
 import SearchBar from '../Components/SearchBar/SearchBar';
 import RecipesContext from '../context/RecipesContext';
 
-function Foods() {
+function Drinks() {
   const { itens } = useContext(RecipesContext);
   const [disableInput, setDisableInput] = useState(false);
 
@@ -20,14 +20,14 @@ function Foods() {
 
   return (
     <>
-      <Header title="Foods" handleSearch={ handleSearch } />
+      <Header title="Drinks" handleSearch={ handleSearch } />
       { disableInput && <SearchBar /> }
       {itens.length > 0
         && itens.map((item, index) => <div key={ index }>{item.strMeal}</div>)}
-      <FoodsRecipes />
+      <DrinksRecipes />
       <Footer />
     </>
   );
 }
 
-export default Foods;
+export default Drinks;

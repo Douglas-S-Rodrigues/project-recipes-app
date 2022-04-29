@@ -2,28 +2,28 @@ import React, { useContext, useEffect } from 'react';
 import RecipesContext from '../context/RecipesContext';
 
 function FoodsRecipes() {
-  const { drinkState, getApiDrinks } = useContext(RecipesContext);
+  const { foods, getApiFoods } = useContext(RecipesContext);
 
   useEffect(() => {
-    getApiDrinks();
+    getApiFoods();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const maxLength = 12;
 
-  return drinkState.map((drink, index) => {
+  return foods.map((food, index) => {
     if (index < maxLength) {
       return (
-        <div key={ drink.idDrink } data-testid={ `${index}-recipe-card` }>
+        <div key={ food.idMeal } data-testid={ `${index}-recipe-card` }>
           <img
             data-testid={ `${index}-card-img` }
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
+            src={ food.strMealThumb }
+            alt={ food.strMeal }
             width="100"
             height="100"
           />
           <h6 data-testid={ `${index}-card-name` }>
-            { drink.strDrink }
+            { food.strMeal }
           </h6>
         </div>
       );
