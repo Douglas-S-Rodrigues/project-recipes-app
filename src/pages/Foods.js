@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import FoodsRecipes from '../Components/FoodsRecipes';
+import FoodCategoryButton from '../Components/FoodCategoryButton';
 
 import SearchBar from '../Components/SearchBar/SearchBar';
 import RecipesContext from '../context/RecipesContext';
@@ -24,6 +25,7 @@ function Foods() {
       { disableInput && <SearchBar /> }
       {itens.length > 0
         && itens.map((item, index) => <div key={ index }>{item.strMeal}</div>)}
+      <FoodCategoryButton />
       <FoodsRecipes />
       <Footer />
     </>
