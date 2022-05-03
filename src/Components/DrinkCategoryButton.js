@@ -14,7 +14,7 @@ function DrinkCategoryButton() {
   return drinkCategory.map((category, index) => {
     if (index < maxLength) {
       return (
-        <div>
+        <div key={ index }>
           <button
             type="button"
             data-testid={ `${category.strCategory}-category-filter` }
