@@ -70,6 +70,8 @@ function RecipesProvider({ children }) {
     getFoodCategoryApi,
     drinkCategory,
     getDrinkCategoryApi,
+    setFoods,
+    setDrinkState,
   };
 
   return (
