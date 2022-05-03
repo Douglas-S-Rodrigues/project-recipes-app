@@ -14,18 +14,20 @@ function FoodsRecipes() {
   return drinkState.map((drink, index) => {
     if (index < maxLength) {
       return (
-        <div key={ drink.idDrink } data-testid={ `${index}-recipe-card` }>
-          <img
-            data-testid={ `${index}-card-img` }
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
-            width="100"
-            height="100"
-          />
-          <h6 data-testid={ `${index}-card-name` }>
-            { drink.strDrink }
-          </h6>
-        </div>
+        <a href={ `/foods/${drink.idDrink}` }>
+          <div key={ drink.idDrink } data-testid={ `${index}-recipe-card` }>
+            <img
+              data-testid={ `${index}-card-img` }
+              src={ drink.strDrinkThumb }
+              alt={ drink.strDrink }
+              width="100"
+              height="100"
+            />
+            <h6 data-testid={ `${index}-card-name` }>
+              { drink.strDrink }
+            </h6>
+          </div>
+        </a>
       );
     } return null;
   });

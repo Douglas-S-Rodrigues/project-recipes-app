@@ -1,0 +1,40 @@
+import React, { useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import RecipesContext from '../context/RecipesContext';
+import shareIcon from '../images/shareIcon.svg';
+import heartIcon from '../images/whiteHeartIcon.svg';
+
+function FoodsDetails() {
+  const { id } = useParams();
+  const { foods, getApiFoods } = useContext(RecipesContext);
+
+  useEffect(() => {
+    getApiFoods();
+    console.log(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div>
+      <img src="" alt="" data-testid="recipe-photo" />
+      <h2 data-testid="recipe-title">{ foods.strMeal }</h2>
+      <img src={ shareIcon } alt="shareIcon" data-testid="share-btn" />
+      <img src={ heartIcon } alt="heartIcon" data-testid="favorite-btn" />
+      <h5 data-testid="recipe-category">Categoria</h5>
+      <ul>
+        <li data-testid={ `${foods.idMeal}-ingredient-name-and-measure` }>ingredients</li>
+      </ul>
+      <h4>Instruções</h4>
+      <p data-testid="instructions">Texto das instruções</p>
+      <iframe src="" title="Video"> </iframe>
+      <div data-testid={ `${foods.idMeal}-recomendation-card` }>
+        Card da receita
+      </div>
+      <button type="button" data-testid="start-recipe-btn">
+        Iniciar receita
+      </button>
+    </div>
+  );
+}
+
+export default FoodsDetails;
