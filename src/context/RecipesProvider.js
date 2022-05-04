@@ -9,7 +9,6 @@ import apiDrinksDetails from '../services/apiDrinksDetails';
 import getFoodsCategory from '../services/apiFoodCategory';
 import getDrinksCategory from '../services/apiDrinkCategory';
 
-
 import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
@@ -22,7 +21,6 @@ function RecipesProvider({ children }) {
   const [drinksDetails, setDrinksDetails] = useState([]);
   const [foodCategory, setFoodCategory] = useState([]);
   const [drinkCategory, setDrinkCategory] = useState([]);
-
 
   async function getApiFoods() {
     const { meals } = await getFoods();
