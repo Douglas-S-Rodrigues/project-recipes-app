@@ -40,6 +40,7 @@ function RecipesProvider({ children }) {
   async function getApiDrinksDetails(id) {
     const { drinks } = await apiDrinksDetails(id);
     setDrinksDetails(drinks[0]);
+  }
 
   async function getFoodCategoryApi() {
     const { meals } = await getFoodsCategory();
