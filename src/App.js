@@ -15,6 +15,8 @@ import ExploreFoods from './pages/ExploreFoods';
 import FoodsIngredients from './pages/FoodsIngredients';
 import DrinksIngredients from './pages/DrinksIngredients';
 import FoodsNationalities from './pages/FoodsNationalities';
+import FoodDetails from './Components/FoodDetails';
+import DrinksDetails from './Components/DrinksDetails';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 
@@ -23,6 +25,8 @@ function App() {
     <BrowserRouter>
       <Switch>
         <RecipesProvider>
+          <Route path="/drinks/:id" component={ DrinksDetails } />
+          <Route path="/foods/:id" component={ FoodDetails } />
           <Route path="/explore/drinks/ingredients" component={ DrinksIngredients } />
           <Route path="/explore/foods/nationalities" component={ FoodsNationalities } />
           <Route path="/explore/foods/ingredients" component={ FoodsIngredients } />
