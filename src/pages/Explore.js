@@ -6,7 +6,7 @@ import Footer from '../Components/Footer';
 function Explore() {
   return (
     <>
-      <Header title="Explore" />
+      <Header title="Explore" searchRender={ false } />
 
       <div>
 

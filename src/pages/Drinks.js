@@ -21,7 +21,7 @@ function Drinks() {
 
   return (
     <>
-      <Header title="Drinks" handleSearch={ handleSearch } />
+      <Header title="Drinks" handleSearch={ handleSearch } searchRender />
       { disableInput && <SearchBar /> }
       {itens.length > 0
         && itens.map((item, index) => <div key={ index }>{item.strMeal}</div>)}

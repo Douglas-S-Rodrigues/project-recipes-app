@@ -6,10 +6,10 @@ import Header from '../Components/Header';
 function Profile() {
   return (
     <>
-      <Header title="Profile" />
+      <Header title="Profile" searchRender={ false } />
 
       <h2 data-testid="profile-email">
-        { JSON.parse(window.localStorage.getItem('user')).email }
+        { localStorage.getItem('user') }
       </h2>
 
       <Link to="/done-recipes">

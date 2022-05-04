@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
 function FoodsIngredients() {
@@ -14,18 +15,20 @@ function FoodsIngredients() {
   return foodIngredients.map((food, index) => {
     if (index < maxLength) {
       return (
-        <div key={ food.idIngredient } data-testid={ `${index}-ingredient-card` }>
-          <img
-            data-testid={ `${index}-card-img` }
-            src={ `https://www.themealdb.com/images/ingredients/${food.strIngredient}-Small.png` }
-            alt={ food.strIngredient }
-            width="100"
-            height="100"
-          />
-          <h6 data-testid={ `${index}-card-name` }>
-            { food.strIngredient }
-          </h6>
-        </div>
+        <Link key={ index } to="/foods">
+          <div key={ food.idIngredient } data-testid={ `${index}-ingredient-card` }>
+            <img
+              data-testid={ `${index}-card-img` }
+              src={ `https://www.themealdb.com/images/ingredients/${food.strIngredient}-Small.png` }
+              alt={ food.strIngredient }
+              width="100"
+              height="100"
+            />
+            <h6 data-testid={ `${index}-card-name` }>
+              { food.strIngredient }
+            </h6>
+          </div>
+        </Link>
       );
     } return null;
   });
