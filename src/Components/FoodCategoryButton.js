@@ -10,19 +10,25 @@ function FoodCategoryButton() {
     foods,
   } = useContext(RecipesContext);
 
-  const [whitoutFilter, setWithoutFilter] = useState('');
+  const [withoutFilter, setWithoutFilter] = useState('');
   const [toggle, setToggle] = useState(false);
+  const [validate, setValidate] = useState('');
 
   async function handleClick({ target }) {
     setWithoutFilter(foods);
-    if (!toggle) {
+    if (!toggle || validate !== target.value) {
       const { meals } = await getFoodCategoryFilter(target.value);
       setFoods(meals);
       setToggle(!toggle);
+      setValidate(target.value);
     } else if (toggle) {
-      setFoods(whitoutFilter);
+      setFoods(withoutFilter);
       setToggle(!toggle);
     }
+  }
+
+  function AllCategories() {
+    setFoods(withoutFilter);
   }
 
   useEffect(() => {
@@ -32,21 +38,34 @@ function FoodCategoryButton() {
 
   const maxLength = 5;
 
-  return foodCategory.map((category, index) => {
-    if (index < maxLength) {
-      return (
-        <button
-          key={ category.strCategory }
-          type="button"
-          value={ category.strCategory }
-          data-testid={ `${category.strCategory}-category-filter` }
-          onClick={ (e) => handleClick(e) }
-        >
-          {category.strCategory}
-        </button>
-      );
-    } return null;
-  });
+  return (
+    <>
+      <section>
+        {foodCategory.map((category, index) => {
+          if (index < maxLength) {
+            return (
+              <button
+                key={ category.strCategory }
+                type="button"
+                value={ category.strCategory }
+                data-testid={ `${category.strCategory}-category-filter` }
+                onClick={ (e) => handleClick(e) }
+              >
+                {category.strCategory}
+              </button>
+            );
+          } return null;
+        })}
+      </section>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ AllCategories }
+      >
+        All
+      </button>
+    </>
+  );
 }
 
 export default FoodCategoryButton;

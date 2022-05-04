@@ -10,19 +10,25 @@ function DrinkCategoryButton() {
     drinkState,
   } = useContext(RecipesContext);
 
-  const [whitoutFilter, setWithoutFilter] = useState('');
+  const [withoutFilter, setWithoutFilter] = useState('');
   const [toggle, setToggle] = useState(false);
+  const [validate, setValidate] = useState('');
 
   async function handleClick({ target }) {
     setWithoutFilter(drinkState);
-    if (!toggle) {
+    if (!toggle || validate !== target.value) {
       const { drinks } = await getDrinkCategoryFilter(target.value);
       setDrinkState(drinks);
       setToggle(!toggle);
+      setValidate(target.value);
     } else if (toggle) {
-      setDrinkState(whitoutFilter);
+      setDrinkState(withoutFilter);
       setToggle(!toggle);
     }
+  }
+
+  function AllCategories() {
+    setDrinkState(withoutFilter);
   }
 
   useEffect(() => {
@@ -31,22 +37,34 @@ function DrinkCategoryButton() {
   }, []);
 
   const maxLength = 5;
-
-  return drinkCategory.map((category, index) => {
-    if (index < maxLength) {
-      return (
-        <button
-          key={ category.strCategory }
-          type="button"
-          value={ category.strCategory }
-          data-testid={ `${category.strCategory}-category-filter` }
-          onClick={ (e) => handleClick(e) }
-        >
-          {category.strCategory}
-        </button>
-      );
-    } return null;
-  });
+  return (
+    <>
+      <section>
+        { drinkCategory.map((category, index) => {
+          if (index < maxLength) {
+            return (
+              <button
+                key={ category.strCategory }
+                type="button"
+                value={ category.strCategory }
+                data-testid={ `${category.strCategory}-category-filter` }
+                onClick={ (e) => handleClick(e) }
+              >
+                {category.strCategory}
+              </button>
+            );
+          } return null;
+        })}
+      </section>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ AllCategories }
+      >
+        All
+      </button>
+    </>
+  );
 }
 
 export default DrinkCategoryButton;
