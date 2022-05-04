@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
 function FoodsRecipes() {
@@ -14,7 +15,11 @@ function FoodsRecipes() {
   return foods.map((food, index) => {
     if (index < maxLength) {
       return (
-        <div key={ food.idMeal } data-testid={ `${index}-recipe-card` }>
+        <Link
+          to={ `/foods/${food.idMeal}` }
+          key={ food.idMeal }
+          data-testid={ `${index}-recipe-card` }
+        >
           <img
             data-testid={ `${index}-card-img` }
             src={ food.strMealThumb }
@@ -25,7 +30,7 @@ function FoodsRecipes() {
           <h6 data-testid={ `${index}-card-name` }>
             { food.strMeal }
           </h6>
-        </div>
+        </Link>
       );
     } return null;
   });
