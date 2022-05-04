@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import getFoods from '../services/apiFood';
 import getDrinks from '../services/apiDrink';
+
 import apiFoodsDetails from '../services/apiFoodsDetails';
 import apiDrinksDetails from '../services/apiDrinksDetails';
+
+import getFoodsCategory from '../services/apiFoodCategory';
+import getDrinksCategory from '../services/apiDrinkCategory';
+
 
 import RecipesContext from './RecipesContext';
 
@@ -15,6 +20,9 @@ function RecipesProvider({ children }) {
   const [drinkState, setDrinkState] = useState([]);
   const [foodsDetails, setFoodsDetails] = useState([]);
   const [drinksDetails, setDrinksDetails] = useState([]);
+  const [foodCategory, setFoodCategory] = useState([]);
+  const [drinkCategory, setDrinkCategory] = useState([]);
+
 
   async function getApiFoods() {
     const { meals } = await getFoods();
@@ -34,6 +42,15 @@ function RecipesProvider({ children }) {
   async function getApiDrinksDetails(id) {
     const { drinks } = await apiDrinksDetails(id);
     setDrinksDetails(drinks[0]);
+
+  async function getFoodCategoryApi() {
+    const { meals } = await getFoodsCategory();
+    setFoodCategory(meals);
+  }
+
+  async function getDrinkCategoryApi() {
+    const { drinks } = await getDrinksCategory();
+    setDrinkCategory(drinks);
   }
 
   async function searchItem(event) {
@@ -70,6 +87,12 @@ function RecipesProvider({ children }) {
     getApiDrinksDetails,
     foodsDetails,
     drinksDetails,
+    foodCategory,
+    getFoodCategoryApi,
+    drinkCategory,
+    getDrinkCategoryApi,
+    setFoods,
+    setDrinkState,
   };
 
   return (
