@@ -21,12 +21,11 @@ function Foods() {
 
   return (
     <>
-      <Header title="Foods" handleSearch={ handleSearch } />
-      { disableInput && <SearchBar /> }
-      {itens.length > 0
-        && itens.map((item, index) => <div key={ index }>{item.strMeal}</div>)}
-      <FoodCategoryButton />
-      <FoodsRecipes />
+      <Header title="Foods" handleSearch={ handleSearch } searchRender />
+      { disableInput ? <SearchBar /> : <FoodCategoryButton /> }
+      { itens.length > 0
+        ? itens.map((item, index) => <div key={ index }>{item.strMeal}</div>)
+        : <FoodsRecipes /> }
       <Footer />
     </>
   );

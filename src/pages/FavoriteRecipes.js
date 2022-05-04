@@ -5,7 +5,7 @@ import Header from '../Components/Header';
 function FavoriteRecipes() {
   return (
 
-    <Header title="Favorite Recipes" />
+    <Header title="Favorite Recipes" searchRender={ false } />
 
   );
 }
