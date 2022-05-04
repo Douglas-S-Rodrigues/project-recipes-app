@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import getDrinkCategoryFilter from '../services/apiDrinkCategoryFilter';
 
@@ -7,11 +7,22 @@ function DrinkCategoryButton() {
     getDrinkCategoryApi,
     drinkCategory,
     setDrinkState,
+    drinkState,
   } = useContext(RecipesContext);
 
+  const [whitoutFilter, setWithoutFilter] = useState('');
+  const [toggle, setToggle] = useState(false);
+
   async function handleClick({ target }) {
-    const { drinks } = await getDrinkCategoryFilter(target.value);
-    setDrinkState(drinks);
+    setWithoutFilter(drinkState);
+    if (!toggle) {
+      const { drinks } = await getDrinkCategoryFilter(target.value);
+      setDrinkState(drinks);
+      setToggle(!toggle);
+    } else if (toggle) {
+      setDrinkState(whitoutFilter);
+      setToggle(!toggle);
+    }
   }
 
   useEffect(() => {
