@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import getFoodCategoryFilter from '../services/apiFoodCategoryFilter';
 
@@ -7,11 +7,22 @@ function FoodCategoryButton() {
     getFoodCategoryApi,
     foodCategory,
     setFoods,
+    foods,
   } = useContext(RecipesContext);
 
+  const [whitoutFilter, setWithoutFilter] = useState('');
+  const [toggle, setToggle] = useState(false);
+
   async function handleClick({ target }) {
-    const { meals } = await getFoodCategoryFilter(target.value);
-    setFoods(meals);
+    setWithoutFilter(foods);
+    if (!toggle) {
+      const { meals } = await getFoodCategoryFilter(target.value);
+      setFoods(meals);
+      setToggle(!toggle);
+    } else if (toggle) {
+      setFoods(whitoutFilter);
+      setToggle(!toggle);
+    }
   }
 
   useEffect(() => {
