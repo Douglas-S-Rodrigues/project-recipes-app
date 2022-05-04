@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import RecipesContext from '../context/RecipesContext';
 
-function FoodsRecipes() {
+function DrinksRecipes() {
   const { drinkState, getApiDrinks } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function FoodsRecipes() {
   return drinkState.map((drink, index) => {
     if (index < maxLength) {
       return (
-        <a href={ `/foods/${drink.idDrink}` }>
+        <a href={ `/drinks/${drink.idDrink}` }>
           <div key={ drink.idDrink } data-testid={ `${index}-recipe-card` }>
             <img
               data-testid={ `${index}-card-img` }
@@ -33,4 +33,4 @@ function FoodsRecipes() {
   });
 }
 
-export default FoodsRecipes;
+export default DrinksRecipes;
