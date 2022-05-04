@@ -20,7 +20,6 @@ import DrinksDetails from './Components/DrinksDetails';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 
-
 function App() {
   return (
     <BrowserRouter>
