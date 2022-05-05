@@ -19,6 +19,7 @@ import FoodDetails from './Components/FoodDetails';
 import DrinksDetails from './Components/DrinksDetails';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/foods" component={ Foods } />
           <Route exact path="/drinks" component={ Drinks } />
           <Route exact path="/" component={ Login } />
+          <Route exact path="/explore/drinks/nationalities" component={ NotFound } />
         </RecipesProvider>
       </Switch>
     </BrowserRouter>

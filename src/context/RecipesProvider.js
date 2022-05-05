@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import getFoods from '../services/apiFood';
 import getDrinks from '../services/apiDrink';
-
 import apiFoodsDetails from '../services/apiFoodsDetails';
 import apiDrinksDetails from '../services/apiDrinksDetails';
-
 import getFoodsCategory from '../services/apiFoodCategory';
 import getDrinksCategory from '../services/apiDrinkCategory';
+import getApiFoodCategoryByNationality from '../services/apiFoodCategoryByNationality';
 import { getFoodIngredients, getDrinkIngredients } from '../services/apiIngredients';
 
 import RecipesContext from './RecipesContext';
@@ -22,6 +21,7 @@ function RecipesProvider({ children }) {
   const [drinksDetails, setDrinksDetails] = useState([]);
   const [foodCategory, setFoodCategory] = useState([]);
   const [drinkCategory, setDrinkCategory] = useState([]);
+  const [nationalities, setNationalities] = useState([]);
   const [foodIngredients, setFoodIngredients] = useState([]);
   const [drinkIngredients, setDrinkIngredients] = useState([]);
 
@@ -53,6 +53,11 @@ function RecipesProvider({ children }) {
   async function getDrinkCategoryApi() {
     const { drinks } = await getDrinksCategory();
     setDrinkCategory(drinks);
+  }
+
+  async function getFoodCategoryApiByNationality() {
+    const { meals } = await getApiFoodCategoryByNationality();
+    setNationalities(meals);
   }
 
   async function getFoodIngredientsApi() {
@@ -109,6 +114,8 @@ function RecipesProvider({ children }) {
     getDrinkIngredientsApi,
     setFoods,
     setDrinkState,
+    nationalities,
+    getFoodCategoryApiByNationality,
   };
 
   return (
