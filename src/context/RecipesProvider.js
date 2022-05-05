@@ -4,6 +4,7 @@ import getFoods from '../services/apiFood';
 import getDrinks from '../services/apiDrink';
 import getFoodsCategory from '../services/apiFoodCategory';
 import getDrinksCategory from '../services/apiDrinkCategory';
+import getApiFoodCategoryByNationality from '../services/apiFoodCategoryByNationality';
 
 import RecipesContext from './RecipesContext';
 
@@ -15,6 +16,7 @@ function RecipesProvider({ children }) {
   const [drinkState, setDrinkState] = useState([]);
   const [foodCategory, setFoodCategory] = useState([]);
   const [drinkCategory, setDrinkCategory] = useState([]);
+  const [nationalities, setNationalities] = useState([]);
 
   async function getApiFoods() {
     const { meals } = await getFoods();
@@ -34,6 +36,11 @@ function RecipesProvider({ children }) {
   async function getDrinkCategoryApi() {
     const { drinks } = await getDrinksCategory();
     setDrinkCategory(drinks);
+  }
+
+  async function getFoodCategoryApiByNationality() {
+    const { meals } = await getApiFoodCategoryByNationality();
+    setNationalities(meals);
   }
 
   async function searchItem(event) {
@@ -72,6 +79,8 @@ function RecipesProvider({ children }) {
     getDrinkCategoryApi,
     setFoods,
     setDrinkState,
+    nationalities,
+    getFoodCategoryApiByNationality,
   };
 
   return (

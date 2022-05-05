@@ -18,6 +18,7 @@ function FoodCategoryButton() {
     setWithoutFilter(foods);
     if (!toggle || validate !== target.value) {
       const { meals } = await getFoodCategoryFilter(target.value);
+
       setFoods(meals);
       setToggle(!toggle);
       setValidate(target.value);
