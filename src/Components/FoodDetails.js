@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
+import CardDrinks from './CardDrinks';
+import './DetailsPage.css';
 
 function FoodsDetails() {
   const { id } = useParams();
@@ -79,11 +81,20 @@ function FoodsDetails() {
       <iframe
         src={ strYoutube() }
         title="video"
+        data-testid="video"
       />
-      {/* <div data-testid={ `${index}-recomendation-card` }>
-        Card da receita
-      </div> */}
-      <button type="button" data-testid="start-recipe-btn">
+      <div
+        className="d-flex flex-nowrap overflow-auto"
+        style={ { gap: '10px' } }
+      >
+        <h4>Recomedadas</h4>
+        <CardDrinks />
+      </div>
+      <button
+        type="button"
+        className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
+        data-testid="start-recipe-btn"
+      >
         Iniciar receita
       </button>
     </div>
