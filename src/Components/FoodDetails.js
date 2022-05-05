@@ -22,18 +22,22 @@ function FoodsDetails() {
   const filterMeasure = () => {
     const measureFilter = [];
     details.forEach((measure) => {
-      if (measure.includes('strMeasure') && foodsDetails[measure]) {
+      if (measure.includes('strMeasure')) {
         measureFilter.push(foodsDetails[measure]);
       }
     });
-    const a = measureFilter.filter((measure) => measure.includes(' '));
-    return a;
+    const newMeasureFilter = measureFilter.filter((measure) => measure !== ' ');
+    return newMeasureFilter;
   };
 
-  useEffect(() => {
-    console.log(filterIngredients());
-    console.log(filterMeasure());
-  }, [details]);
+  const arrayIngredients = filterIngredients();
+  const arrayMeasure = filterMeasure();
+
+  function strYoutube() {
+    if (typeof foodsDetails.strYoutube === 'string') {
+      return foodsDetails.strYoutube.replace('watch?v=', 'embed/');
+    }
+  }
 
   useEffect(() => {
     getApiFoodsDetails(id);
@@ -56,16 +60,16 @@ function FoodsDetails() {
       <button type="button">
         <img src={ heartIcon } alt="heartIcon" data-testid="favorite-btn" />
       </button>
-      <h5 data-testid="recipe-category">{ foodsDetails.strCategory }</h5>
+      <h4 data-testid="recipe-category">{ foodsDetails.strCategory }</h4>
       <ul>
-        Ingredients
+        <h3>Ingredients</h3>
         {
-          details.map(({ strMeasure1, strIngredient1, index }) => (
+          arrayIngredients.map((strIngredient, index) => (
             <li
               key={ index }
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { `${strIngredient1} - ${strMeasure1}` }
+              { `${strIngredient} - ${arrayMeasure[index]}` }
             </li>
           ))
         }
@@ -73,10 +77,7 @@ function FoodsDetails() {
       <h4>Instruções</h4>
       <p data-testid="instructions">{ foodsDetails.strInstructions }</p>
       <iframe
-        src={ foodsDetails.strYoutube }
-        frameBorder="0"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
+        src={ strYoutube() }
         title="video"
       />
       {/* <div data-testid={ `${index}-recomendation-card` }>
