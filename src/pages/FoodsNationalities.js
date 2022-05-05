@@ -8,11 +8,12 @@ import Footer from '../Components/Footer';
 function FoodsNationalities() {
   return (
     <>
-      <Header title="Explore Nationalities" />
+      <Header title="Explore Nationalities" searchRender />
       <div>
         <FoodFilterByNationality />
       </div>
       <FoodNationalityRecipes />
+
       <Footer />
     </>
   );

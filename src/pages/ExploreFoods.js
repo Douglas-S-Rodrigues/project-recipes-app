@@ -6,7 +6,7 @@ import Footer from '../Components/Footer';
 function ExploreFoods() {
   return (
     <>
-      <Header title="Explore Foods" />
+      <Header title="Explore Foods" searchRender={ false } />
 
       <div>
 

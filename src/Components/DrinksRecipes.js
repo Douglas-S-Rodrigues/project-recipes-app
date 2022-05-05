@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
-function FoodsRecipes() {
+function DrinksRecipes() {
   const { drinkState, getApiDrinks } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -36,4 +36,4 @@ function FoodsRecipes() {
   });
 }
 
-export default FoodsRecipes;
+export default DrinksRecipes;
