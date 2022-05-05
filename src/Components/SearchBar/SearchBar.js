@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from '../../context/RecipesContext';
 
 import './SearchBar.css';
 
 function SearchBar() {
+  const { pathname } = useLocation();
   const { searchItem } = useContext(RecipesContext);
   return (
-    <form onSubmit={ searchItem } className="search-container">
+    <form
+      onSubmit={ (event) => searchItem(event, pathname) }
+      className="search-container"
+    >
       <input
         data-testid="search-input"
         type="text"
@@ -53,7 +58,5 @@ function SearchBar() {
     </form>
   );
 }
-
-// SearchBar.propTypes = {};
 
 export default SearchBar;
