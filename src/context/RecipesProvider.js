@@ -59,7 +59,7 @@ function RecipesProvider({ children }) {
     const { meals } = await getApiFoodCategoryByNationality();
     setNationalities(meals);
   }
-    
+
   async function getFoodIngredientsApi() {
     const { meals } = await getFoodIngredients();
     setFoodIngredients(meals);
