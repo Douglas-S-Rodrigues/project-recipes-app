@@ -1,19 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
 
-function RecipesProgress({ props }) {
-  const { foodsDetails } = useContext(RecipesContext);
-  const [ingredient, setIngredient] = useState([]);
-  const [measure, setMeasure] = useState([]);
-
-  useEffect(() => {
-    setIngredient(props.location.state.arrayIn);
-    setMeasure(props.location.state1.arrayMea);
-  }, []);
+function RecipesProgress() {
+  const { foodsDetails, ingredients, measure } = useContext(RecipesContext);
 
   return (
     <div>
@@ -34,13 +27,13 @@ function RecipesProgress({ props }) {
       <h4 data-testid="recipe-category">{ foodsDetails.strCategory }</h4>
       <ul>
         <h3>Ingredients</h3>
-        { ingredient.map((strIngredient, index) => (
-          <li key={ index }>
-            <label htmlFor={ index }>
+        <div className="d-flex flex-column">
+          { ingredients.map((strIngredient, index) => (
+            <label htmlFor={ index } key={ index }>
               <input
                 id={ index }
-                onChange={ (event) => handleChange(event) }
-                checked={ check }
+                // onChange={ (event) => handleChange(event) }
+                // checked={ check }
                 name={ index }
                 type="checkbox"
                 key={ index }
@@ -48,8 +41,8 @@ function RecipesProgress({ props }) {
               />
               { `${strIngredient} - ${measure[index]}` }
             </label>
-          </li>
-        ))}
+          ))}
+        </div>
       </ul>
       <h4>Instruções</h4>
       <p data-testid="instructions">{ foodsDetails.strInstructions }</p>

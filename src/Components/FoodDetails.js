@@ -13,6 +13,8 @@ function FoodsDetails() {
   const {
     foodsDetails,
     getApiFoodsDetails,
+    setIngredients,
+    setMeasure,
   } = useContext(RecipesContext);
   const details = Object.keys(foodsDetails);
 
@@ -51,12 +53,10 @@ function FoodsDetails() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClick = (ingredient, measure) => {
-    history.push({
-      pathname: `/progress/${id}`,
-      state: { arrayIn: ingredient },
-      state1: { arrayMe: measure },
-    });
+  const handleClick = () => {
+    setIngredients(arrayIngredients);
+    setMeasure(arrayMeasure);
+    history.push(`/progress/${id}`);
   };
 
   return (
@@ -105,7 +105,7 @@ function FoodsDetails() {
         type="button"
         className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
         data-testid="start-recipe-btn"
-        onClick={ (e) => handleClick(e.arrayIngredients, e.arrayMeasure) }
+        onClick={ handleClick }
       >
         Iniciar receita
       </button>
