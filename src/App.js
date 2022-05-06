@@ -19,12 +19,14 @@ import DrinksDetails from './Components/DrinksDetails';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import NotFound from './pages/NotFound';
+import RecipesProgress from './Components/RecipesProgress';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <RecipesProvider>
+          <Route path="/progress/:id" component={ RecipesProgress } />
           <Route path="/drinks/:id" component={ DrinksDetails } />
           <Route path="/foods/:id" component={ FoodDetails } />
           <Route path="/explore/drinks/ingredients" component={ DrinksIngredients } />

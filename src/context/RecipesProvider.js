@@ -24,6 +24,9 @@ function RecipesProvider({ children }) {
   const [nationalities, setNationalities] = useState([]);
   const [foodIngredients, setFoodIngredients] = useState([]);
   const [drinkIngredients, setDrinkIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [measure, setMeasure] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
   const [randomFood, setRandomFood] = useState([]);
   const [randomDrink, setRandomDrink] = useState([]);
 
@@ -155,6 +158,12 @@ function RecipesProvider({ children }) {
     setDrinkState,
     nationalities,
     getFoodCategoryApiByNationality,
+    ingredients,
+    setIngredients,
+    measure,
+    setMeasure,
+    doneRecipes,
+    setDoneRecipes,
     randomFood,
     getRandomRecipe,
     randomDrink,
