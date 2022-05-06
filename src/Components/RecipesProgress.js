@@ -1,10 +1,19 @@
-import React, { useContext } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
 
-function RecipesProgress() {
-  const { ingredients, measure, foodsDetails } = useContext(RecipesContext);
+function RecipesProgress({ props }) {
+  const { foodsDetails } = useContext(RecipesContext);
+  const [ingredient, setIngredient] = useState([]);
+  const [measure, setMeasure] = useState([]);
+
+  useEffect(() => {
+    setIngredient(props.location.state.arrayIn);
+    setMeasure(props.location.state1.arrayMea);
+  }, []);
 
   return (
     <div>
@@ -25,7 +34,7 @@ function RecipesProgress() {
       <h4 data-testid="recipe-category">{ foodsDetails.strCategory }</h4>
       <ul>
         <h3>Ingredients</h3>
-        { ingredients.map((strIngredient, index) => (
+        { ingredient.map((strIngredient, index) => (
           <li key={ index }>
             <label htmlFor={ index }>
               <input
@@ -55,5 +64,9 @@ function RecipesProgress() {
     </div>
   );
 }
+RecipesProgress.propTypes = {
+  arrayIn: PropTypes.array,
+  arrayMea: PropTypes.array,
+}.isRequerid;
 
 export default RecipesProgress;

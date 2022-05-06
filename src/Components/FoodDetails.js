@@ -1,4 +1,5 @@
-import React, { useEffect, useContext } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
@@ -12,8 +13,6 @@ function FoodsDetails() {
   const {
     foodsDetails,
     getApiFoodsDetails,
-    setIngredients,
-    setMeasure,
   } = useContext(RecipesContext);
   const details = Object.keys(foodsDetails);
 
@@ -40,8 +39,6 @@ function FoodsDetails() {
 
   const arrayIngredients = filterIngredients();
   const arrayMeasure = filterMeasure();
-  setIngredients(arrayIngredients);
-  setMeasure(arrayMeasure);
 
   function strYoutube() {
     if (typeof foodsDetails.strYoutube === 'string') {
@@ -54,13 +51,12 @@ function FoodsDetails() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* useEffect(() => {
-    const validRecipe = localStorage.getItem('doneRecipe');
-    console.log(validRecipe);
-  }, []); */
-
-  const handleClick = () => {
-    history.push(`/progress/${id}`);
+  const handleClick = (ingredient, measure) => {
+    history.push({
+      pathname: `/progress/${id}`,
+      state: { arrayIn: ingredient },
+      state1: { arrayMe: measure },
+    });
   };
 
   return (
@@ -109,7 +105,7 @@ function FoodsDetails() {
         type="button"
         className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
         data-testid="start-recipe-btn"
-        onClick={ () => handleClick() }
+        onClick={ (e) => handleClick(e.arrayIngredients, e.arrayMeasure) }
       >
         Iniciar receita
       </button>
