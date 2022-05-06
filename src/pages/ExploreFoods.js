@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+
+import RecipesContext from '../context/RecipesContext';
 
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 
 function ExploreFoods() {
+  const { randomFood, getRandomRecipe } = useContext(RecipesContext);
+
+  useEffect(() => {
+    getRandomRecipe();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Header title="Explore Foods" searchRender={ false } />
@@ -28,12 +37,14 @@ function ExploreFoods() {
           </button>
         </a>
 
-        <button
-          type="button"
-          data-testid="explore-surprise"
-        >
-          Surprise me!
-        </button>
+        <a href={ `/foods/${randomFood.idMeal}` }>
+          <button
+            type="button"
+            data-testid="explore-surprise"
+          >
+            Surprise me!
+          </button>
+        </a>
 
       </div>
 
