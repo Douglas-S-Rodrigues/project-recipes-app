@@ -19,9 +19,8 @@ function Drinks() {
   return (
     <>
       <Header title="Drinks" handleSearch={ handleSearch } searchRender />
-      { disableInput && <SearchBar /> }
+      { disableInput ? <SearchBar /> : <DrinkCategoryButton /> }
       <DrinksRecipes />
-      <DrinkCategoryButton />
       <Footer />
     </>
   );
