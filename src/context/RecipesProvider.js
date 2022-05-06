@@ -23,6 +23,9 @@ function RecipesProvider({ children }) {
   const [nationalities, setNationalities] = useState([]);
   const [foodIngredients, setFoodIngredients] = useState([]);
   const [drinkIngredients, setDrinkIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [measure, setMeasure] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
   async function getApiFoods() {
     const { meals } = await getFoods();
@@ -142,6 +145,12 @@ function RecipesProvider({ children }) {
     setDrinkState,
     nationalities,
     getFoodCategoryApiByNationality,
+    ingredients,
+    setIngredients,
+    measure,
+    setMeasure,
+    doneRecipes,
+    setDoneRecipes,
   };
 
   return (

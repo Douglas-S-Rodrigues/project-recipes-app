@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
@@ -8,7 +8,13 @@ import './DetailsPage.css';
 
 function FoodsDetails() {
   const { id } = useParams();
-  const { foodsDetails, getApiFoodsDetails } = useContext(RecipesContext);
+  const history = useHistory();
+  const {
+    foodsDetails,
+    getApiFoodsDetails,
+    setIngredients,
+    setMeasure,
+  } = useContext(RecipesContext);
   const details = Object.keys(foodsDetails);
 
   const filterIngredients = () => {
@@ -34,6 +40,8 @@ function FoodsDetails() {
 
   const arrayIngredients = filterIngredients();
   const arrayMeasure = filterMeasure();
+  setIngredients(arrayIngredients);
+  setMeasure(arrayMeasure);
 
   function strYoutube() {
     if (typeof foodsDetails.strYoutube === 'string') {
@@ -45,6 +53,15 @@ function FoodsDetails() {
     getApiFoodsDetails(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /* useEffect(() => {
+    const validRecipe = localStorage.getItem('doneRecipe');
+    console.log(validRecipe);
+  }, []); */
+
+  const handleClick = () => {
+    history.push(`/progress/${id}`);
+  };
 
   return (
     <div>
@@ -65,16 +82,14 @@ function FoodsDetails() {
       <h4 data-testid="recipe-category">{ foodsDetails.strCategory }</h4>
       <ul>
         <h3>Ingredients</h3>
-        {
-          arrayIngredients.map((strIngredient, index) => (
-            <li
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              { `${strIngredient} - ${arrayMeasure[index]}` }
-            </li>
-          ))
-        }
+        { arrayIngredients.map((strIngredient, index) => (
+          <li
+            key={ index }
+            data-testid={ `${index}-ingredient-name-and-measure` }
+          >
+            { `${strIngredient} - ${arrayMeasure[index]}` }
+          </li>
+        ))}
       </ul>
       <h4>Instruções</h4>
       <p data-testid="instructions">{ foodsDetails.strInstructions }</p>
@@ -94,6 +109,7 @@ function FoodsDetails() {
         type="button"
         className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
         data-testid="start-recipe-btn"
+        onClick={ () => handleClick() }
       >
         Iniciar receita
       </button>
