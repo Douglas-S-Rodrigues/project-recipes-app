@@ -22,7 +22,7 @@ function RecipesProgress({ props }) {
         alt={ foodsDetails.strMeal }
         data-testid="recipe-photo"
         width="200"
-        heigth="200"
+        height="200"
       />
       <h2 data-testid="recipe-title">{ foodsDetails.strMeal }</h2>
       <button type="button">
@@ -67,6 +67,6 @@ function RecipesProgress({ props }) {
 RecipesProgress.propTypes = {
   arrayIn: PropTypes.array,
   arrayMea: PropTypes.array,
-}.isRequerid;
+}.isRequired;
 
 export default RecipesProgress;
