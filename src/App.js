@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import RecipesProvider from './context/RecipesProvider';
 
 import Login from './pages/Login';
@@ -20,12 +19,14 @@ import DrinksDetails from './Components/DrinksDetails';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import NotFound from './pages/NotFound';
+import RecipesProgress from './Components/RecipesProgress';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <RecipesProvider>
+          <Route path="/progress/:id" component={ RecipesProgress } />
           <Route path="/drinks/:id" component={ DrinksDetails } />
           <Route path="/foods/:id" component={ FoodDetails } />
           <Route path="/explore/drinks/ingredients" component={ DrinksIngredients } />

@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
+import CardFoods from './CardFoods';
+import './DetailsPage.css';
 
 function DrinksDetails() {
   const { id } = useParams();
@@ -70,10 +72,18 @@ function DrinksDetails() {
       </ul>
       <h4>Instruções</h4>
       <p data-testid="instructions">{ drinksDetails.strInstructions }</p>
-      {/* <div data-testid={ `${index}-recomendation-card` }>
-        Card da receita
-      </div> */}
-      <button type="button" data-testid="start-recipe-btn">
+      <div
+        className="d-flex flex-nowrap overflow-auto"
+        style={ { gap: '10px' } }
+      >
+        <h4>Recomedadas</h4>
+        <CardFoods />
+      </div>
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className="w-100 fixed-bottom p-2 btn btn-success"
+      >
         Iniciar receita
       </button>
     </div>

@@ -8,6 +8,7 @@ import getFoodsCategory from '../services/apiFoodCategory';
 import getDrinksCategory from '../services/apiDrinkCategory';
 import getApiFoodCategoryByNationality from '../services/apiFoodCategoryByNationality';
 import { getFoodIngredients, getDrinkIngredients } from '../services/apiIngredients';
+import { apiFoodRandom, apiDrinkRandom } from '../services/apiRandom';
 
 import RecipesContext from './RecipesContext';
 
@@ -23,6 +24,11 @@ function RecipesProvider({ children }) {
   const [nationalities, setNationalities] = useState([]);
   const [foodIngredients, setFoodIngredients] = useState([]);
   const [drinkIngredients, setDrinkIngredients] = useState([]);
+  // const [ingredients, setIngredients] = useState([]);
+  // const [measure, setMeasure] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
+  const [randomFood, setRandomFood] = useState([]);
+  const [randomDrink, setRandomDrink] = useState([]);
 
   async function getApiFoods() {
     const { meals } = await getFoods();
@@ -71,6 +77,16 @@ function RecipesProvider({ children }) {
 
   function redirectSearch(type, id) {
     window.location.href = `/${type}/${id}`;
+  }
+
+  async function getRandomRecipe() {
+    const { meals } = await apiFoodRandom();
+    setRandomFood(meals[0]);
+  }
+
+  async function getRandomDrink() {
+    const { drinks } = await apiDrinkRandom();
+    setRandomDrink(drinks[0]);
   }
 
   async function searchItem(event, pathname) {
@@ -142,6 +158,16 @@ function RecipesProvider({ children }) {
     setDrinkState,
     nationalities,
     getFoodCategoryApiByNationality,
+    // ingredients,
+    // setIngredients,
+    //  measure,
+    // setMeasure,
+    doneRecipes,
+    setDoneRecipes,
+    randomFood,
+    getRandomRecipe,
+    randomDrink,
+    getRandomDrink,
   };
 
   return (

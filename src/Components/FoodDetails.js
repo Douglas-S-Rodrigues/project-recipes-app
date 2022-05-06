@@ -1,12 +1,19 @@
-import React, { useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
+import CardDrinks from './CardDrinks';
+import './DetailsPage.css';
 
 function FoodsDetails() {
   const { id } = useParams();
-  const { foodsDetails, getApiFoodsDetails } = useContext(RecipesContext);
+  const history = useHistory();
+  const {
+    foodsDetails,
+    getApiFoodsDetails,
+  } = useContext(RecipesContext);
   const details = Object.keys(foodsDetails);
 
   const filterIngredients = () => {
@@ -44,6 +51,14 @@ function FoodsDetails() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleClick = (ingredient, measure) => {
+    history.push({
+      pathname: `/progress/${id}`,
+      state: { arrayIn: ingredient },
+      state1: { arrayMe: measure },
+    });
+  };
+
   return (
     <div>
       <img
@@ -63,27 +78,35 @@ function FoodsDetails() {
       <h4 data-testid="recipe-category">{ foodsDetails.strCategory }</h4>
       <ul>
         <h3>Ingredients</h3>
-        {
-          arrayIngredients.map((strIngredient, index) => (
-            <li
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              { `${strIngredient} - ${arrayMeasure[index]}` }
-            </li>
-          ))
-        }
+        { arrayIngredients.map((strIngredient, index) => (
+          <li
+            key={ index }
+            data-testid={ `${index}-ingredient-name-and-measure` }
+          >
+            { `${strIngredient} - ${arrayMeasure[index]}` }
+          </li>
+        ))}
       </ul>
       <h4>Instruções</h4>
       <p data-testid="instructions">{ foodsDetails.strInstructions }</p>
       <iframe
         src={ strYoutube() }
         title="video"
+        data-testid="video"
       />
-      {/* <div data-testid={ `${index}-recomendation-card` }>
-        Card da receita
-      </div> */}
-      <button type="button" data-testid="start-recipe-btn">
+      <div
+        className="d-flex flex-nowrap overflow-auto"
+        style={ { gap: '10px' } }
+      >
+        <h4>Recomedadas</h4>
+        <CardDrinks />
+      </div>
+      <button
+        type="button"
+        className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
+        data-testid="start-recipe-btn"
+        onClick={ (e) => handleClick(e.arrayIngredients, e.arrayMeasure) }
+      >
         Iniciar receita
       </button>
     </div>
