@@ -1,11 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
-import CardDrinks from './CardDrinks';
-import './DetailsPage.css';
+import CardDrinks from '../Components/CardDrinks';
+import '../Components/DetailsPage.css';
 
 function FoodsDetails() {
   const { id } = useParams();
@@ -56,7 +55,7 @@ function FoodsDetails() {
   const handleClick = () => {
     setIngredients(arrayIngredients);
     setMeasure(arrayMeasure);
-    history.push(`/progress/${id}`);
+    history.push(`/foods/${id}/in-progress`);
   };
 
   return (

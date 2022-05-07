@@ -37,6 +37,10 @@
   font-weight: 900;
 }
 
+.text-decoration-line-through {
+  text-decoration: line-through;
+}
+
 @keyframes shake {
 
   0% {
