@@ -16,10 +16,11 @@ function Drinks() {
       setDisableInput(false);
     }
   };
+
   return (
     <>
       <Header title="Drinks" handleSearch={ handleSearch } searchRender />
-      { disableInput ? <SearchBar /> : <DrinkCategoryButton /> }
+      { disableInput ? <SearchBar click /> : <DrinkCategoryButton /> }
       <DrinksRecipes />
       <Footer />
     </>

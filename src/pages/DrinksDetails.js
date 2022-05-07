@@ -1,13 +1,14 @@
 import React, { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
-import CardFoods from './CardFoods';
-import './DetailsPage.css';
+import CardFoods from '../Components/CardFoods';
+import '../Components/DetailsPage.css';
 
 function DrinksDetails() {
   const { id } = useParams();
+  const history = useHistory();
   const { drinksDetails, getApiDrinksDetails } = useContext(RecipesContext);
   const details = Object.keys(drinksDetails);
 
@@ -39,6 +40,10 @@ function DrinksDetails() {
     getApiDrinksDetails(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleClick = () => {
+    history.push(`/drinks/${id}/in-progress`);
+  };
 
   return (
     <div>
@@ -82,6 +87,7 @@ function DrinksDetails() {
       <button
         type="button"
         data-testid="start-recipe-btn"
+        onClick={ handleClick }
         className="w-100 fixed-bottom p-2 btn btn-success"
       >
         Iniciar receita
