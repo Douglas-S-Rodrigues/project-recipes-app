@@ -1,28 +1,22 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
-import CardDrinks from './CardDrinks';
-import './DetailsPage.css';
+import CardFoods from '../Components/CardFoods';
+import '../Components/DetailsPage.css';
 
-function FoodsDetails() {
+function DrinksDetails() {
   const { id } = useParams();
   const history = useHistory();
-  const {
-    foodsDetails,
-    getApiFoodsDetails,
-    setIngredients,
-    setMeasure,
-  } = useContext(RecipesContext);
-  const details = Object.keys(foodsDetails);
+  const { drinksDetails, getApiDrinksDetails } = useContext(RecipesContext);
+  const details = Object.keys(drinksDetails);
 
   const filterIngredients = () => {
     const ingredientsFilter = [];
     details.forEach((ingredient) => {
-      if (ingredient.includes('strIngredient') && foodsDetails[ingredient]) {
-        ingredientsFilter.push(foodsDetails[ingredient]);
+      if (ingredient.includes('strIngredient') && drinksDetails[ingredient]) {
+        ingredientsFilter.push(drinksDetails[ingredient]);
       }
     });
     return ingredientsFilter;
@@ -32,7 +26,7 @@ function FoodsDetails() {
     const measureFilter = [];
     details.forEach((measure) => {
       if (measure.includes('strMeasure')) {
-        measureFilter.push(foodsDetails[measure]);
+        measureFilter.push(drinksDetails[measure]);
       }
     });
     const newMeasureFilter = measureFilter.filter((measure) => measure !== ' ');
@@ -42,70 +36,59 @@ function FoodsDetails() {
   const arrayIngredients = filterIngredients();
   const arrayMeasure = filterMeasure();
 
-  function strYoutube() {
-    if (typeof foodsDetails.strYoutube === 'string') {
-      return foodsDetails.strYoutube.replace('watch?v=', 'embed/');
-    }
-  }
-
   useEffect(() => {
-    getApiFoodsDetails(id);
+    getApiDrinksDetails(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClick = () => {
-    setIngredients(arrayIngredients);
-    setMeasure(arrayMeasure);
-    history.push(`/progress/${id}`);
+    history.push(`/drinks/${id}/in-progress`);
   };
 
   return (
     <div>
       <img
-        src={ foodsDetails.strMealThumb }
-        alt={ foodsDetails.strMeal }
+        src={ drinksDetails.strDrinkThumb }
+        alt={ drinksDetails.strDrink }
         data-testid="recipe-photo"
         width="200"
         heigth="200"
       />
-      <h2 data-testid="recipe-title">{ foodsDetails.strMeal }</h2>
+      <h2 data-testid="recipe-title">{ drinksDetails.strDrink }</h2>
       <button type="button">
         <img src={ shareIcon } alt="shareIcon" data-testid="share-btn" />
       </button>
       <button type="button">
         <img src={ heartIcon } alt="heartIcon" data-testid="favorite-btn" />
       </button>
-      <h4 data-testid="recipe-category">{ foodsDetails.strCategory }</h4>
+      <h5 data-testid="recipe-category">{ drinksDetails.strAlcoholic }</h5>
       <ul>
         <h3>Ingredients</h3>
-        { arrayIngredients.map((strIngredient, index) => (
-          <li
-            key={ index }
-            data-testid={ `${index}-ingredient-name-and-measure` }
-          >
-            { `${strIngredient} - ${arrayMeasure[index]}` }
-          </li>
-        ))}
+        {
+          arrayIngredients.map((strIngredient, index) => (
+            <li
+              key={ index }
+              data-testid={ `${index}-ingredient-name-and-measure` }
+            >
+              { `${strIngredient} - ${arrayMeasure[index]}` }
+            </li>
+          ))
+        }
       </ul>
       <h4>Instruções</h4>
-      <p data-testid="instructions">{ foodsDetails.strInstructions }</p>
-      <iframe
-        src={ strYoutube() }
-        title="video"
-        data-testid="video"
-      />
+      <p data-testid="instructions">{ drinksDetails.strInstructions }</p>
       <div
         className="d-flex flex-nowrap overflow-auto"
         style={ { gap: '10px' } }
       >
         <h4>Recomedadas</h4>
-        <CardDrinks />
+        <CardFoods />
       </div>
       <button
         type="button"
-        className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
         data-testid="start-recipe-btn"
         onClick={ handleClick }
+        className="w-100 fixed-bottom p-2 btn btn-success"
       >
         Iniciar receita
       </button>
@@ -113,4 +96,4 @@ function FoodsDetails() {
   );
 }
 
-export default FoodsDetails;
+export default DrinksDetails;

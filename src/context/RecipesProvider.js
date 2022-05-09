@@ -130,6 +130,28 @@ function RecipesProvider({ children }) {
     }
   }
 
+  const details = Object.keys(foodsDetails);
+  const filterIngredients = () => {
+    const ingredientsFilter = [];
+    details.forEach((ingredient) => {
+      if (ingredient.includes('strIngredient') && foodsDetails[ingredient]) {
+        ingredientsFilter.push(foodsDetails[ingredient]);
+      }
+    });
+    return ingredientsFilter;
+  };
+
+  const filterMeasure = () => {
+    const measureFilter = [];
+    details.forEach((measures) => {
+      if (measures.includes('strMeasure')) {
+        measureFilter.push(foodsDetails[measures]);
+      }
+    });
+    const newMeasureFilter = measureFilter.filter((measures) => measures !== ' ');
+    return newMeasureFilter;
+  };
+
   const contextValue = {
     email,
     setEmail,
@@ -168,6 +190,8 @@ function RecipesProvider({ children }) {
     getRandomRecipe,
     randomDrink,
     getRandomDrink,
+    filterIngredients,
+    filterMeasure,
   };
 
   return (

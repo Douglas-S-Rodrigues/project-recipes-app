@@ -1,12 +1,39 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
+
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
 
 function RecipesProgress() {
   const { foodsDetails, ingredients, measure } = useContext(RecipesContext);
+  const [check, setCheckedState] = useState(new Set());
+  const [btnStatus, setBtnStatus] = useState(false);
+
+  const buttonDisabled = () => {
+    const elements = document.getElementsByName('checkbox');
+    let checkedCount = 0;
+    elements.forEach((element) => {
+      if (element.checked) {
+        checkedCount += 1;
+      }
+      if (checkedCount === elements.length) {
+        setBtnStatus(false);
+      } else {
+        setBtnStatus(true);
+      }
+    });
+  };
+
+  const handleOnChange = (index) => {
+    const newSelectedItems = new Set(check);
+    if (!newSelectedItems.has(index)) {
+      newSelectedItems.add(index);
+    } else {
+      newSelectedItems.delete(index);
+    }
+    setCheckedState(newSelectedItems);
+    buttonDisabled();
+  };
 
   return (
     <div>
@@ -29,15 +56,18 @@ function RecipesProgress() {
         <h3>Ingredients</h3>
         <div className="d-flex flex-column">
           { ingredients.map((strIngredient, index) => (
-            <label htmlFor={ index } key={ index }>
+            <label
+              htmlFor={ strIngredient }
+              key={ index }
+              data-testid={ `${index}-ingredient-step` }
+              className={ check.has(index) ? 'text-decoration-line-through' : '' }
+            >
               <input
                 id={ index }
-                // onChange={ (event) => handleChange(event) }
-                // checked={ check }
-                name={ index }
                 type="checkbox"
-                key={ index }
-                data-testid={ `${index}-ingredient-name-and-measure` }
+                name="checkbox"
+                checked={ check.has(index) }
+                onChange={ () => handleOnChange(index) }
               />
               { `${strIngredient} - ${measure[index]}` }
             </label>
@@ -49,17 +79,13 @@ function RecipesProgress() {
       <button
         type="button"
         className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
-        data-testid="start-recipe-btn"
-        /* disabled={ disabled } */
+        data-testid="finish-recipe-btn"
+        disabled={ btnStatus }
       >
         Finalizar receita
       </button>
     </div>
   );
 }
-RecipesProgress.propTypes = {
-  arrayIn: PropTypes.array,
-  arrayMea: PropTypes.array,
-}.isRequired;
 
 export default RecipesProgress;
