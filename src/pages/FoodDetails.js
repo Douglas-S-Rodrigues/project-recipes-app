@@ -60,7 +60,7 @@ function FoodsDetails() {
     getApiFoodsDetails(id);
     foods();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [foodsDetails]);
+  }, []);
 
   useEffect(() => {
     const favorites = getFavorites() || [];
