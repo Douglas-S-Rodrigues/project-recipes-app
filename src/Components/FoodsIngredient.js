@@ -1,10 +1,19 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-// import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+// import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { getListFoodIngredients } from '../services/apiIngredients';
 import RecipesContext from '../context/RecipesContext';
 
 function FoodsIngredients() {
-  const { foodIngredients, getFoodIngredientsApi } = useContext(RecipesContext);
+  const { foodIngredients, getFoodIngredientsApi, setFoods } = useContext(RecipesContext);
+  const history = useHistory();
+
+  async function handleClick(ingredient) {
+    const { meals } = await getListFoodIngredients(ingredient);
+    setFoods(meals);
+    history.push('/foods');
+    setFoods(meals);
+  }
 
   useEffect(() => {
     getFoodIngredientsApi();
@@ -16,9 +25,10 @@ function FoodsIngredients() {
   return foodIngredients.map((food, index) => {
     if (index < maxLength) {
       return (
-        <Link
+        <button
+          type="button"
           key={ index }
-          to="/foods"
+          onClick={ () => handleClick(food.strIngredient) }
         >
           <div key={ food.idIngredient } data-testid={ `${index}-ingredient-card` }>
             <img
@@ -32,7 +42,7 @@ function FoodsIngredients() {
               { food.strIngredient }
             </h6>
           </div>
-        </Link>
+        </button>
       );
     } return null;
   });
