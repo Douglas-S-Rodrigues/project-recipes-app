@@ -1,42 +1,23 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import { addFavorites, getFavorites,
+  removeFavorites } from '../services/favoriteStorage';
 import shareIcon from '../images/shareIcon.svg';
-import heartIcon from '../images/whiteHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CardDrinks from '../Components/CardDrinks';
 import '../Components/DetailsPage.css';
 
 function FoodsDetails() {
   const { id } = useParams();
   const history = useHistory();
-  const {
-    foodsDetails,
-    getApiFoodsDetails,
-    setIngredients,
-    setMeasure,
+  const { foodsDetails, getApiFoodsDetails, setIngredients,
+    filterMeasure, filterIngredients, setMeasure,
   } = useContext(RecipesContext);
-  const details = Object.keys(foodsDetails);
 
-  const filterIngredients = () => {
-    const ingredientsFilter = [];
-    details.forEach((ingredient) => {
-      if (ingredient.includes('strIngredient') && foodsDetails[ingredient]) {
-        ingredientsFilter.push(foodsDetails[ingredient]);
-      }
-    });
-    return ingredientsFilter;
-  };
-
-  const filterMeasure = () => {
-    const measureFilter = [];
-    details.forEach((measure) => {
-      if (measure.includes('strMeasure')) {
-        measureFilter.push(foodsDetails[measure]);
-      }
-    });
-    const newMeasureFilter = measureFilter.filter((measure) => measure !== ' ');
-    return newMeasureFilter;
-  };
+  const [favorite, setFavorite] = useState(false);
+  const [detailFoods, setDetailFoods] = useState({});
 
   const arrayIngredients = filterIngredients();
   const arrayMeasure = filterMeasure();
@@ -47,10 +28,27 @@ function FoodsDetails() {
     }
   }
 
-  useEffect(() => {
-    getApiFoodsDetails(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const foods = () => {
+    setDetailFoods({
+      id,
+      type: 'food',
+      nationality: foodsDetails.strArea,
+      category: foodsDetails.strCategory,
+      alcoholicOrNot: '',
+      name: foodsDetails.strMeal,
+      image: foodsDetails.strMealThumb,
+    });
+  };
+
+  const handleFavorite = () => {
+    if (favorite) {
+      setFavorite(false);
+      removeFavorites(id);
+    } else {
+      setFavorite(true);
+      addFavorites({ ...detailFoods });
+    }
+  };
 
   const handleClick = () => {
     setIngredients(arrayIngredients);
@@ -58,8 +56,22 @@ function FoodsDetails() {
     history.push(`/foods/${id}/in-progress`);
   };
 
+  useEffect(() => {
+    getApiFoodsDetails(id);
+    foods();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [foodsDetails]);
+
+  useEffect(() => {
+    const favorites = getFavorites() || [];
+    favorites.forEach((item) => {
+      if (item.id === id) setFavorite(true);
+    });
+  }, [id]);
+
   return (
     <div>
+
       <img
         src={ foodsDetails.strMealThumb }
         alt={ foodsDetails.strMeal }
@@ -67,16 +79,34 @@ function FoodsDetails() {
         width="200"
         heigth="200"
       />
+
       <h2 data-testid="recipe-title">{ foodsDetails.strMeal }</h2>
-      <button type="button">
+
+      <button
+        type="button"
+        data-testid="share-btn"
+      >
         <img src={ shareIcon } alt="shareIcon" data-testid="share-btn" />
       </button>
-      <button type="button">
-        <img src={ heartIcon } alt="heartIcon" data-testid="favorite-btn" />
+
+      <button
+        type="button"
+        onClick={ handleFavorite }
+        data-testid="favorite-btn"
+        src={ favorite ? blackHeartIcon : whiteHeartIcon }
+      >
+        <img
+          src={ favorite ? blackHeartIcon : whiteHeartIcon }
+          alt={ favorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
+        />
       </button>
+
       <h4 data-testid="recipe-category">{ foodsDetails.strCategory }</h4>
+
       <ul>
+
         <h3>Ingredients</h3>
+
         { arrayIngredients.map((strIngredient, index) => (
           <li
             key={ index }
@@ -85,7 +115,9 @@ function FoodsDetails() {
             { `${strIngredient} - ${arrayMeasure[index]}` }
           </li>
         ))}
+
       </ul>
+
       <h4>Instruções</h4>
       <p data-testid="instructions">{ foodsDetails.strInstructions }</p>
       <iframe
@@ -93,6 +125,7 @@ function FoodsDetails() {
         title="video"
         data-testid="video"
       />
+
       <div
         className="d-flex flex-nowrap overflow-auto"
         style={ { gap: '10px' } }
@@ -100,6 +133,7 @@ function FoodsDetails() {
         <h4>Recomedadas</h4>
         <CardDrinks />
       </div>
+
       <button
         type="button"
         className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
@@ -108,6 +142,7 @@ function FoodsDetails() {
       >
         Iniciar receita
       </button>
+
     </div>
   );
 }

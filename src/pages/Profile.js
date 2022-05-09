@@ -8,37 +8,45 @@ function Profile() {
     <>
       <Header title="Profile" searchRender={ false } />
 
-      <h2 data-testid="profile-email">
-        { localStorage.getItem('user') }
-      </h2>
+      <main>
 
-      <Link to="/done-recipes">
-        <button
-          type="button"
-          data-testid="profile-done-btn"
-        >
-          Done Recipes
-        </button>
-      </Link>
+        <h2 data-testid="profile-email">
+          { localStorage.getItem('user') }
+        </h2>
 
-      <Link to="/favorite-recipes">
-        <button
-          type="button"
-          data-testid="profile-favorite-btn"
-        >
-          Favorite Recipes
-        </button>
-      </Link>
+        <div>
 
-      <Link to="/">
-        <button
-          type="button"
-          onClick={ () => localStorage.clear() }
-          data-testid="profile-logout-btn"
-        >
-          Logout
-        </button>
-      </Link>
+          <Link to="/done-recipes">
+            <button
+              type="button"
+              data-testid="profile-done-btn"
+            >
+              Done Recipes
+            </button>
+          </Link>
+
+          <Link to="/favorite-recipes">
+            <button
+              type="button"
+              data-testid="profile-favorite-btn"
+            >
+              Favorite Recipes
+            </button>
+          </Link>
+
+          <Link to="/">
+            <button
+              type="button"
+              onClick={ () => localStorage.clear() }
+              data-testid="profile-logout-btn"
+            >
+              Logout
+            </button>
+          </Link>
+
+        </div>
+
+      </main>
 
       <Footer />
     </>
