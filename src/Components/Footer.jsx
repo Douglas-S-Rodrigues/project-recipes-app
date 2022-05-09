@@ -7,10 +7,10 @@ import mealIcon from '../images/mealIcon.svg';
 
 function Footer() {
   return (
-    <footer className="footer" data-testid="footer">
+    <footer className="navbar fixed-bottom navbar-light bg-light" data-testid="footer">
 
-      <a href="/drinks">
-        <div className=".footer-icons">
+      <a className="navbar-brand" href="/drinks">
+        <div className="container-fluid">
           <img src={ drinkIcon } alt="Drink Icon" data-testid="drinks-bottom-btn" />
         </div>
       </a>

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import RecipesContext from '../context/RecipesContext';
 
 function FoodsIngredients() {
@@ -15,7 +16,10 @@ function FoodsIngredients() {
   return foodIngredients.map((food, index) => {
     if (index < maxLength) {
       return (
-        <Link key={ index } to="/foods">
+        <Link
+          key={ index }
+          to="/foods"
+        >
           <div key={ food.idIngredient } data-testid={ `${index}-ingredient-card` }>
             <img
               data-testid={ `${index}-card-img` }
