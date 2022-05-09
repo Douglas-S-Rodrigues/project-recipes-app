@@ -1,26 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import blackHeartIcon from '../images/shareIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 function FavoritesRecipesCard() {
   return (
     <div>
       <div>
         <Link
-          to={ `/drinks/${drink.idDrink}` }
-          key={ drink.idDrink }
-          data-testid={ `${index}-recipe-card` }
+          to={ `/drinks/${}` }
+          key={ }
         >
           <img
-            data-testid={ `${index}-card-img` }
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
+            data-testid={ `${index}-horizontal-image` }
+            src={  }
+            alt={ }
             width="100"
             height="100"
           />
         </Link>
-        <h6 data-testid={ `${index}-card-name` }>
-          { drink.strDrink }
+        <h6 data-testid={ `${index}-horizontal-name` }>
+          {  }
         </h6>
+        <button
+          type="button"
+          data-testid={ `${}-horizontal-share-btn` }
+          src={ shareIcon }
+          onClick={ () => handleClick() }
+        >
+        </button>
+        <button
+          type="button"
+          id={ recipeId }
+          data-testid={ `${}-horizontal-favorite-btn` }
+          onClick={ }
+        >
+          <img src={  blackHeartIcon } alt="" />
+        </button>
       </div>
     </div>
   );
