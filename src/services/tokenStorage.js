@@ -5,6 +5,7 @@ function tokenStorage(email) {
     email,
   });
   localStorage.setItem('user', user);
+  localStorage.setItem('favoriteRecipes', JSON.stringify([]));
 }
 
 export default tokenStorage;

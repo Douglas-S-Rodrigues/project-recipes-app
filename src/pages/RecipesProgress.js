@@ -70,7 +70,7 @@ function RecipesProgress() {
         alt={ foodsDetails.strMeal }
         data-testid="recipe-photo"
         width="200"
-        heigth="200"
+        height="200"
       />
       <h2 data-testid="recipe-title">{ foodsDetails.strMeal }</h2>
       <button type="button">

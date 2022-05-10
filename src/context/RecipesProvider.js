@@ -30,7 +30,7 @@ function RecipesProvider({ children }) {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [randomFood, setRandomFood] = useState([]);
   const [randomDrink, setRandomDrink] = useState([]);
-  const [inProgress, setInProgress] = useState({ cocktails: {}, meals: {} });
+  const [inProgress, setInProgress] = useState({});
 
   useEffect(() => {
     addInProgressRecipes(inProgress);
@@ -135,6 +135,27 @@ function RecipesProvider({ children }) {
         });
     }
   }
+  const detailsDrinks = Object.keys(drinksDetails);
+  const filterIngredientsDrinks = () => {
+    const ingredientsFilter = [];
+    detailsDrinks.forEach((ingredient) => {
+      if (ingredient.includes('strIngredient') && drinksDetails[ingredient]) {
+        ingredientsFilter.push(drinksDetails[ingredient]);
+      }
+    });
+    return ingredientsFilter;
+  };
+
+  const filterMeasureDrinks = () => {
+    const measureFilter = [];
+    detailsDrinks.forEach((measures) => {
+      if (measures.includes('strMeasure')) {
+        measureFilter.push(drinksDetails[measures]);
+      }
+    });
+    const newMeasureFilter = measureFilter.filter((measures) => measures !== ' ');
+    return newMeasureFilter;
+  };
 
   const details = Object.keys(foodsDetails);
   const filterIngredients = () => {
@@ -198,6 +219,8 @@ function RecipesProvider({ children }) {
     getRandomDrink,
     filterIngredients,
     filterMeasure,
+    filterIngredientsDrinks,
+    filterMeasureDrinks,
     inProgress,
     setInProgress,
   };
