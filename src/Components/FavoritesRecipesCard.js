@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import { removeFavorites } from '../services/favoriteStorage';
 
 const copy = require('clipboard-copy');
 
 function FavoritesRecipesCard() {
   const [favorites, setFavorites] = useState([]);
   const [link, setLink] = useState(false);
+  const [fav, setFav] = useState(true);
   const copyMsg = 'Link copied!';
 
   useEffect(() => {
@@ -30,6 +32,13 @@ function FavoritesRecipesCard() {
     const url = `http://localhost:3000/${type}s/${id}`;
     copy(url);
   }
+
+  const handleFavorite = () => {
+    if (fav) {
+      setFav(true);
+      removeFavorites(id);
+    }
+  };
 
   return (
     <div>
@@ -82,6 +91,7 @@ function FavoritesRecipesCard() {
             type="button"
             data-testid={ `${index}-horizontal-favorite-btn` }
             src={ blackHeartIcon }
+            onClick={ handleFavorite }
           >
             <img
               src={ blackHeartIcon }

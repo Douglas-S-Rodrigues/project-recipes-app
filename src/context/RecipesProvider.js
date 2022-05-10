@@ -30,7 +30,7 @@ function RecipesProvider({ children }) {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [randomFood, setRandomFood] = useState([]);
   const [randomDrink, setRandomDrink] = useState([]);
-  const [inProgress, setInProgress] = useState({ cocktails: {}, meals: {} });
+  const [inProgress, setInProgress] = useState({});
 
   useEffect(() => {
     addInProgressRecipes(inProgress);
