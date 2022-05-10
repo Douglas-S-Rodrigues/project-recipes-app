@@ -129,6 +129,27 @@ function RecipesProvider({ children }) {
         });
     }
   }
+  const detailsDrinks = Object.keys(foodsDetails);
+  const filterIngredientsDrinks = () => {
+    const ingredientsFilter = [];
+    detailsDrinks.forEach((ingredient) => {
+      if (ingredient.includes('strIngredient') && drinksDetails[ingredient]) {
+        ingredientsFilter.push(drinksDetails[ingredient]);
+      }
+    });
+    return ingredientsFilter;
+  };
+
+  const filterMeasureDrinks = () => {
+    const measureFilter = [];
+    detailsDrinks.forEach((measures) => {
+      if (measures.includes('strMeasure')) {
+        measureFilter.push(drinksDetails[measures]);
+      }
+    });
+    const newMeasureFilter = measureFilter.filter((measures) => measures !== ' ');
+    return newMeasureFilter;
+  };
 
   const details = Object.keys(foodsDetails);
   const filterIngredients = () => {
@@ -192,6 +213,8 @@ function RecipesProvider({ children }) {
     getRandomDrink,
     filterIngredients,
     filterMeasure,
+    filterIngredientsDrinks,
+    filterMeasureDrinks,
   };
 
   return (

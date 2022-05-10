@@ -1,43 +1,57 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import { addFavorites, getFavorites,
+  removeFavorites } from '../services/favoriteStorage';
 import shareIcon from '../images/shareIcon.svg';
-import heartIcon from '../images/whiteHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CardFoods from '../Components/CardFoods';
 import '../Components/DetailsPage.css';
 
 function DrinksDetails() {
   const { id } = useParams();
   const history = useHistory();
-  const { drinksDetails, getApiDrinksDetails } = useContext(RecipesContext);
-  const details = Object.keys(drinksDetails);
+  const { drinksDetails, getApiDrinksDetails,
+    filterIngredientsDrinks, filterMeasureDrinks } = useContext(RecipesContext);
+  const [favorite, setFavorite] = useState(false);
+  const [detailsDrinks, setDetailsDrinks] = useState({});
 
-  const filterIngredients = () => {
-    const ingredientsFilter = [];
-    details.forEach((ingredient) => {
-      if (ingredient.includes('strIngredient') && drinksDetails[ingredient]) {
-        ingredientsFilter.push(drinksDetails[ingredient]);
-      }
+  const drinks = () => {
+    setDetailsDrinks({
+      id,
+      type: 'drink',
+      nationality: drinksDetails.strArea,
+      category: drinksDetails.strCategory,
+      alcoholicOrNot: drinksDetails.strAlcoholic,
+      name: drinksDetails.strDrink,
+      image: drinksDetails.strDrinkThumb,
     });
-    return ingredientsFilter;
   };
 
-  const filterMeasure = () => {
-    const measureFilter = [];
-    details.forEach((measure) => {
-      if (measure.includes('strMeasure')) {
-        measureFilter.push(drinksDetails[measure]);
-      }
-    });
-    const newMeasureFilter = measureFilter.filter((measure) => measure !== ' ');
-    return newMeasureFilter;
+  const handleFavorite = () => {
+    if (favorite) {
+      setFavorite(false);
+      removeFavorites(id);
+    } else {
+      setFavorite(true);
+      addFavorites({ ...detailsDrinks });
+    }
   };
 
-  const arrayIngredients = filterIngredients();
-  const arrayMeasure = filterMeasure();
+  useEffect(() => {
+    const favorites = getFavorites() || [];
+    favorites.forEach((item) => {
+      if (item.id === id) setFavorite(true);
+    });
+  }, [id]);
+
+  const arrayIngredients = filterIngredientsDrinks();
+  const arrayMeasure = filterMeasureDrinks();
 
   useEffect(() => {
     getApiDrinksDetails(id);
+    drinks();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,14 +66,22 @@ function DrinksDetails() {
         alt={ drinksDetails.strDrink }
         data-testid="recipe-photo"
         width="200"
-        heigth="200"
+        height="200"
       />
       <h2 data-testid="recipe-title">{ drinksDetails.strDrink }</h2>
-      <button type="button">
+      <button type="button" data-testid="share-btn">
         <img src={ shareIcon } alt="shareIcon" data-testid="share-btn" />
       </button>
-      <button type="button">
-        <img src={ heartIcon } alt="heartIcon" data-testid="favorite-btn" />
+      <button
+        type="button"
+        onClick={ handleFavorite }
+        data-testid="favorite-btn"
+        src={ favorite ? blackHeartIcon : whiteHeartIcon }
+      >
+        <img
+          src={ favorite ? blackHeartIcon : whiteHeartIcon }
+          alt={ favorite ? 'blackHeartIcon' : 'whiteHeartIcon' }
+        />
       </button>
       <h5 data-testid="recipe-category">{ drinksDetails.strAlcoholic }</h5>
       <ul>
