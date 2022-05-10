@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
-import recipeDoneStorage from '../services/recipeDoneStorage';
+import { addRecipeDoneStorage } from '../services/recipeDoneStorage';
 /* import { removeInProgressItem } from '../services/InProgressStorage'; */
 
 function RecipesProgress() {
   const { id } = useParams();
+  const { history } = useHistory();
   const {
     foodsDetails, ingredients, measure, inProgress, setInProgress,
   } = useContext(RecipesContext);
@@ -43,7 +44,8 @@ function RecipesProgress() {
       doneDate: new Date().toLocaleString(),
       tags: [foodsDetails.strTags],
     });
-    recipeDoneStorage(doneRecipes);
+    addRecipeDoneStorage('meals', doneRecipes);
+    history.pushState('/done-recipes');
   };
 
   const handleOnChange = (index) => {
