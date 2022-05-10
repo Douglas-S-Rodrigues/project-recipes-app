@@ -10,12 +10,14 @@ function FavoritesRecipesCard() {
   const [favorites, setFavorites] = useState([]);
   const [link, setLink] = useState(false);
   const [fav, setFav] = useState(true);
+  const [withoutFilter, setWithoutFilter] = useState([]);
   const copyMsg = 'Link copied!';
 
   useEffect(() => {
     function getFavRecipesStorage() {
       const getFav = JSON.parse(localStorage.getItem('favoriteRecipes'));
       console.log(getFav);
+      setWithoutFilter(getFav);
       setFavorites(getFav);
     }
     getFavRecipesStorage();
@@ -40,24 +42,32 @@ function FavoritesRecipesCard() {
     }
   };
 
+  function favFilter(type) {
+    const newState = favorites.filter((favorite) => favorite.type === type);
+    setFavorites(newState);
+  }
+
   return (
     <>
       <div>
         <button
           type="button"
           data-testid="filter-by-all-btn"
+          onClick={ () => setFavorites(withoutFilter) }
         >
           All
         </button>
         <button
           type="button"
           data-testid="filter-by-food-btn"
+          onClick={ () => favFilter('food') }
         >
           Foods
         </button>
         <button
           type="button"
           data-testid="filter-by-drink-btn"
+          onClick={ () => favFilter('drink') }
         >
           Drinks
         </button>
