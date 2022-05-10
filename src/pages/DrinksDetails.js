@@ -16,23 +16,25 @@ function DrinksDetails() {
   const history = useHistory();
   const { drinksDetails, getApiDrinksDetails,
     filterIngredientsDrinks, filterMeasureDrinks } = useContext(RecipesContext);
+
   const [favorite, setFavorite] = useState(false);
   const [detailsDrinks, setDetailsDrinks] = useState({});
   const [link, setLink] = useState(false);
 
   const copyMsg = 'Link copied!';
 
-  const drinks = () => {
+  useEffect(() => {
     setDetailsDrinks({
       id,
       type: 'drink',
       nationality: '',
-      category: '',
+      category: drinksDetails.strCategory,
       alcoholicOrNot: drinksDetails.strAlcoholic,
       name: drinksDetails.strDrink,
       image: drinksDetails.strDrinkThumb,
     });
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [drinksDetails]);
 
   const handleFavorite = () => {
     if (favorite) {
@@ -56,7 +58,6 @@ function DrinksDetails() {
 
   useEffect(() => {
     getApiDrinksDetails(id);
-    drinks();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

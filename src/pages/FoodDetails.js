@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
@@ -35,7 +34,7 @@ function FoodsDetails() {
     }
   }
 
-  const foods = () => {
+  useEffect(() => {
     setDetailFoods({
       id,
       type: 'food',
@@ -45,7 +44,8 @@ function FoodsDetails() {
       name: foodsDetails.strMeal,
       image: foodsDetails.strMealThumb,
     });
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [foodsDetails]);
 
   const handleFavorite = () => {
     if (favorite) {
@@ -69,7 +69,6 @@ function FoodsDetails() {
 
   useEffect(() => {
     getApiFoodsDetails(id);
-    foods();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
