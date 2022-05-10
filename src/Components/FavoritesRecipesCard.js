@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import { removeFavorites } from '../services/favoriteStorage';
+// import { removeFavorites } from '../services/favoriteStorage';
 
 const copy = require('clipboard-copy');
 
 function FavoritesRecipesCard() {
   const [favorites, setFavorites] = useState([]);
   const [link, setLink] = useState(false);
-  const [fav, setFav] = useState(true);
+  // const [fav, setFav] = useState(true);
   const [withoutFilter, setWithoutFilter] = useState([]);
   const copyMsg = 'Link copied!';
 
@@ -35,12 +35,12 @@ function FavoritesRecipesCard() {
     copy(url);
   }
 
-  const handleFavorite = (id) => {
-    if (fav) {
-      setFav(true);
-      removeFavorites(id);
-    }
-  };
+  function favRemove(storage) {
+    const state = favorites;
+    const newState = state.filter((favorite, index) => index !== storage);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newState));
+    setFavorites(newState);
+  }
 
   function favFilter(type) {
     const newState = favorites.filter((favorite) => favorite.type === type);
@@ -106,7 +106,8 @@ function FavoritesRecipesCard() {
             type="button"
             data-testid={ `${index}-horizontal-favorite-btn` }
             src={ blackHeartIcon }
-            onClick={ handleFavorite }
+            value={ index }
+            onClick={ () => favRemove(index) }
           >
             <img
               src={ blackHeartIcon }
