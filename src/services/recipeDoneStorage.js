@@ -4,7 +4,7 @@ export function addRecipeDoneStorage(type, recipes) {
   localStorage.setItem('doneRecipe', JSON.stringify(doneRecipe));
 }
 
-export function getRecipeDpneStorage() {
-  const recipesDone = JSON.parse(localStorage.getItem('doneRecipe'));
+export function getRecipeDoneStorage() {
+  const recipesDone = JSON.parse(localStorage.getItem('doneRecipe')) || [];
   return recipesDone;
 }

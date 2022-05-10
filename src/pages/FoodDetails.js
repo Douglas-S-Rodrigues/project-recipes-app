@@ -9,7 +9,6 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CardDrinks from '../Components/CardDrinks';
 import '../Components/DetailsPage.css';
-import { getRecipeDpneStorage } from '../services/recipeDoneStorage';
 
 const copy = require('clipboard-copy');
 
@@ -24,8 +23,6 @@ function FoodsDetails() {
   const [favorite, setFavorite] = useState(false);
   const [detailFoods, setDetailFoods] = useState({});
   const [link, setLink] = useState(false);
-  const [validBtn, setValidBtn] = useState(false);
-  const [recipeInProgress, setRecipeInProgress] = useState(false);
 
   const arrayIngredients = filterIngredients();
   const arrayMeasure = filterMeasure();
@@ -69,18 +66,6 @@ function FoodsDetails() {
     });
     history.push(`/foods/${id}/in-progress`);
   };
-
-  useEffect(() => {
-    const recipeDone = getRecipeDpneStorage();
-    const valid = recipeDone.some((item) => item.id === id);
-    setValidBtn(valid);
-    const progressIn = getInProgressRecipes();
-    if (progressIn[inProgress.meals][id]) {
-      setRecipeInProgress(true);
-    }
-    console.log(validBtn);
-    console.log(recipeInProgress);
-  }, [recipeDone]);
 
   useEffect(() => {
     getApiFoodsDetails(id);
