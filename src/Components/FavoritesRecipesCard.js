@@ -13,6 +13,7 @@ function FavoritesRecipesCard() {
   useEffect(() => {
     function getFavRecipesStorage() {
       const getFav = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
       setFavorites(getFav);
     }
     getFavRecipesStorage();
