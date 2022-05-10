@@ -96,20 +96,14 @@ function RecipesProvider({ children }) {
   }
 
   async function searchItem(event, pathname) {
-    // previne a atualização da pagina após o evento de submit do formulário.
     event.preventDefault();
-
     const [searchinput] = event.target.elements;
     const searchType = event.target.elements.searchType.value;
     const endpointSearch = searchType === 'i' ? 'filter' : 'search';
-
-    // verifica em qual pagina o usuário está e atualiza a url da api a ser utilizada(api de drinks ou api de comidas).
     let url = pathname === '/foods'
       ? 'https://www.themealdb.com/api/json/v1/1/'
       : 'https://www.thecocktaildb.com/api/json/v1/1/';
     url += `${endpointSearch}.php?${searchType}=${searchinput.value}`;
-
-    // verifica se a pesquisa utilizada foi first letter, se sim verifica a quantidade de caracteres passada.
     if (searchType === 'f' && searchinput.value.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     } else {
@@ -120,15 +114,11 @@ function RecipesProvider({ children }) {
           if (!drinks?.length > 0 && !meals?.length > 0) {
             global.alert('Sorry, we haven\'t found any recipes for these filters.');
           } else {
-            // verifica se apenas 1 receita foi encontrada.
-            // caso verdadeiro, redireciona o usuário para a pagina dos detalhes da receita.
             if (drinks?.length === 1) {
               redirectSearch('drinks', drinks[0].idDrink);
             } else if (meals?.length === 1) {
               redirectSearch('foods', meals[0].idMeal);
             }
-
-            // atualiza as receitas
             setFoods(meals);
             setDrinkState(drinks);
           }
@@ -204,6 +194,7 @@ function RecipesProvider({ children }) {
     drinkIngredients,
     getDrinkIngredientsApi,
     setFoods,
+    setFoodsDetails,
     setDrinkState,
     nationalities,
     getFoodCategoryApiByNationality,
