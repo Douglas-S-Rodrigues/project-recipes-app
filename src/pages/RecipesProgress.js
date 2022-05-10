@@ -9,13 +9,12 @@ import { addRecipeDoneStorage } from '../services/recipeDoneStorage';
 
 function RecipesProgress() {
   const { id } = useParams();
-  const { history } = useHistory();
+  const history = useHistory();
   const {
     foodsDetails, ingredients, measure, inProgress, setInProgress,
   } = useContext(RecipesContext);
   const [check, setCheckedState] = useState(new Set());
   const [btnStatus, setBtnStatus] = useState(false);
-  const [doneRecipes, setDoneRecipes] = useState();
 
   const buttonDisabled = () => {
     const elements = document.getElementsByName('checkbox');
@@ -33,7 +32,7 @@ function RecipesProgress() {
   };
 
   const handleClick = () => {
-    setDoneRecipes({
+    const doneRecipes = {
       id,
       type: 'food',
       nationality: foodsDetails.strArea,
@@ -43,9 +42,9 @@ function RecipesProgress() {
       image: foodsDetails.strMealThumb,
       doneDate: new Date().toLocaleString(),
       tags: [foodsDetails.strTags],
-    });
+    };
     addRecipeDoneStorage('meals', doneRecipes);
-    history.pushState('/done-recipes');
+    history.push('/done-recipes');
   };
 
   const handleOnChange = (index) => {
