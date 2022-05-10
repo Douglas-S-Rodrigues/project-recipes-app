@@ -13,7 +13,8 @@ function FoodsDetails() {
   const { id } = useParams();
   const history = useHistory();
   const { foodsDetails, getApiFoodsDetails, setIngredients,
-    filterMeasure, filterIngredients, setMeasure,
+    filterMeasure, filterIngredients, setMeasure, setInProgress,
+    inProgress,
   } = useContext(RecipesContext);
 
   const [favorite, setFavorite] = useState(false);
@@ -53,6 +54,10 @@ function FoodsDetails() {
   const handleClick = () => {
     setIngredients(arrayIngredients);
     setMeasure(arrayMeasure);
+    setInProgress({
+      ...inProgress,
+      meals: { ...inProgress.meals, [id]: [] },
+    });
     history.push(`/foods/${id}/in-progress`);
   };
 

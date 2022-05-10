@@ -1,13 +1,20 @@
 import React, { useContext, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
+import recipeDoneStorage from '../services/recipeDoneStorage';
+/* import { removeInProgressItem } from '../services/InProgressStorage'; */
 
 function RecipesProgress() {
-  const { foodsDetails, ingredients, measure } = useContext(RecipesContext);
+  const { id } = useParams();
+  const {
+    foodsDetails, ingredients, measure, inProgress, setInProgress,
+  } = useContext(RecipesContext);
   const [check, setCheckedState] = useState(new Set());
   const [btnStatus, setBtnStatus] = useState(false);
+  const [doneRecipes, setDoneRecipes] = useState();
 
   const buttonDisabled = () => {
     const elements = document.getElementsByName('checkbox');
@@ -24,12 +31,33 @@ function RecipesProgress() {
     });
   };
 
+  const handleClick = () => {
+    setDoneRecipes({
+      id,
+      type: 'food',
+      nationality: foodsDetails.strArea,
+      category: foodsDetails.strCategory,
+      alcoholicOrNot: '',
+      name: foodsDetails.strMeal,
+      image: foodsDetails.strMealThumb,
+      doneDate: new Date().toLocaleString(),
+      tags: [foodsDetails.strTags],
+    });
+    recipeDoneStorage(doneRecipes);
+  };
+
   const handleOnChange = (index) => {
     const newSelectedItems = new Set(check);
     if (!newSelectedItems.has(index)) {
       newSelectedItems.add(index);
+      setInProgress({
+        ...inProgress,
+        meals: {
+          ...inProgress.meals, [id]: [...inProgress.meals[id], ingredients[index]] },
+      });
     } else {
       newSelectedItems.delete(index);
+      /* removeInProgressItem(ingredients[index], meals, [id]); */
     }
     setCheckedState(newSelectedItems);
     buttonDisabled();
@@ -81,6 +109,7 @@ function RecipesProgress() {
         className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
         data-testid="finish-recipe-btn"
         disabled={ btnStatus }
+        onClick={ handleClick }
       >
         Finalizar receita
       </button>
