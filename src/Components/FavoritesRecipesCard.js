@@ -104,7 +104,7 @@ function FavoritesRecipesCard() {
             />
             ...
           </button>
-          <p>{link && copyMsg }</p>
+          <p>{ link && copyMsg }</p>
         </div>
       ))}
     </>

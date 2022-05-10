@@ -9,6 +9,8 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CardFoods from '../Components/CardFoods';
 import '../Components/DetailsPage.css';
 
+const copy = require('clipboard-copy');
+
 function DrinksDetails() {
   const { id } = useParams();
   const history = useHistory();
@@ -16,13 +18,16 @@ function DrinksDetails() {
     filterIngredientsDrinks, filterMeasureDrinks } = useContext(RecipesContext);
   const [favorite, setFavorite] = useState(false);
   const [detailsDrinks, setDetailsDrinks] = useState({});
+  const [link, setLink] = useState(false);
+
+  const copyMsg = 'Link copied!';
 
   const drinks = () => {
     setDetailsDrinks({
       id,
       type: 'drink',
-      nationality: drinksDetails.strArea,
-      category: drinksDetails.strCategory,
+      nationality: '',
+      category: '',
       alcoholicOrNot: drinksDetails.strAlcoholic,
       name: drinksDetails.strDrink,
       image: drinksDetails.strDrinkThumb,
@@ -59,6 +64,13 @@ function DrinksDetails() {
     history.push(`/drinks/${id}/in-progress`);
   };
 
+  function getLinkToShare() {
+    setLink(true);
+    const url = `http://localhost:3000/drinks/${id}`;
+    console.log(url);
+    copy(url);
+  }
+
   return (
     <div>
       <img
@@ -69,8 +81,14 @@ function DrinksDetails() {
         height="200"
       />
       <h2 data-testid="recipe-title">{ drinksDetails.strDrink }</h2>
-      <button type="button" data-testid="share-btn">
-        <img src={ shareIcon } alt="shareIcon" data-testid="share-btn" />
+      <p>{ link && copyMsg }</p>
+      <button
+        type="button"
+        data-testid="share-btn"
+        src={ shareIcon }
+        onClick={ getLinkToShare }
+      >
+        <img src={ shareIcon } alt="shareIcon" />
       </button>
       <button
         type="button"

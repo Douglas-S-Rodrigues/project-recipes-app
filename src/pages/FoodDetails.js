@@ -9,6 +9,8 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CardDrinks from '../Components/CardDrinks';
 import '../Components/DetailsPage.css';
 
+const copy = require('clipboard-copy');
+
 function FoodsDetails() {
   const { id } = useParams();
   const history = useHistory();
@@ -19,9 +21,12 @@ function FoodsDetails() {
 
   const [favorite, setFavorite] = useState(false);
   const [detailFoods, setDetailFoods] = useState({});
+  const [link, setLink] = useState(false);
 
   const arrayIngredients = filterIngredients();
   const arrayMeasure = filterMeasure();
+
+  const copyMsg = 'Link copied!';
 
   function strYoutube() {
     if (typeof foodsDetails.strYoutube === 'string') {
@@ -74,6 +79,13 @@ function FoodsDetails() {
     });
   }, [id]);
 
+  function getLinkToShare() {
+    setLink(true);
+    const url = `http://localhost:3000/foods/${id}`;
+    console.log(url);
+    copy(url);
+  }
+
   return (
     <div>
 
@@ -86,12 +98,14 @@ function FoodsDetails() {
       />
 
       <h2 data-testid="recipe-title">{ foodsDetails.strMeal }</h2>
-
+      <p>{ link && copyMsg }</p>
       <button
         type="button"
         data-testid="share-btn"
+        src={ shareIcon }
+        onClick={ getLinkToShare }
       >
-        <img src={ shareIcon } alt="shareIcon" data-testid="share-btn" />
+        <img src={ shareIcon } alt="shareIcon" />
       </button>
 
       <button

@@ -135,7 +135,7 @@ function RecipesProvider({ children }) {
         });
     }
   }
-  const detailsDrinks = Object.keys(foodsDetails);
+  const detailsDrinks = Object.keys(drinksDetails);
   const filterIngredientsDrinks = () => {
     const ingredientsFilter = [];
     detailsDrinks.forEach((ingredient) => {
