@@ -15,7 +15,7 @@ function FavoritesRecipesCard() {
   useEffect(() => {
     function getFavRecipesStorage() {
       const getFav = JSON.parse(localStorage.getItem('favoriteRecipes'));
-
+      console.log(getFav);
       setFavorites(getFav);
     }
     getFavRecipesStorage();
@@ -33,7 +33,7 @@ function FavoritesRecipesCard() {
     copy(url);
   }
 
-  const handleFavorite = () => {
+  const handleFavorite = (id) => {
     if (fav) {
       setFav(true);
       removeFavorites(id);
@@ -41,28 +41,33 @@ function FavoritesRecipesCard() {
   };
 
   return (
-    <div>
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-      >
-        All
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-food-btn"
-      >
-        Foods
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-drink-btn"
-      >
-        Drinks
-      </button>
-      { favorites.map((favorite, index) => (
-        <div key={ favorite.name }>
-          <Link to={ `/${favorite.type}s/${favorite.id}` }>
+    <>
+      <div>
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+        >
+          All
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-food-btn"
+        >
+          Foods
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+        >
+          Drinks
+        </button>
+      </div>
+      { favorites && favorites.map((favorite, index) => (
+        <div key={ index }>
+          <Link
+            to={ `/${favorite.type}s/${favorite.id}` }
+            key={ index }
+          >
             <img
               data-testid={ `${index}-horizontal-image` }
               src={ favorite.image }
@@ -102,7 +107,7 @@ function FavoritesRecipesCard() {
           <p>{link && copyMsg }</p>
         </div>
       ))}
-    </div>
+    </>
   );
 }
 
