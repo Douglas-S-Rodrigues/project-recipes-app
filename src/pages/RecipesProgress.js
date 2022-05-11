@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
 import { addRecipeDoneStorage } from '../services/recipeDoneStorage';
-import { removeInProgressItem } from '../services/InProgressStorage';
+import { removeInProgressItem,
+  addInProgressRecipes } from '../services/InProgressStorage';
 
 function RecipesProgress() {
   const { id } = useParams();
@@ -31,6 +32,10 @@ function RecipesProgress() {
     });
   };
 
+  useEffect(() => {
+    addInProgressRecipes(inProgressMeals, 'meals');
+  }, [inProgressMeals]);
+
   const handleClick = () => {
     const doneRecipes = {
       id,
@@ -45,8 +50,8 @@ function RecipesProgress() {
     };
     addRecipeDoneStorage('meals', doneRecipes);
     removeInProgressItem([id]);
-    /* const itens = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    console.log(Object.keys(itens.meals)); */
+    const itens = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    console.log('localStorage:', itens);
     history.push('/done-recipes');
   };
 

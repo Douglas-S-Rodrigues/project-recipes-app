@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import getFoods from '../services/apiFood';
 import getDrinks from '../services/apiDrink';
@@ -9,7 +9,6 @@ import getDrinksCategory from '../services/apiDrinkCategory';
 import getApiFoodCategoryByNationality from '../services/apiFoodCategoryByNationality';
 import { getFoodIngredients, getDrinkIngredients } from '../services/apiIngredients';
 import { apiFoodRandom, apiDrinkRandom } from '../services/apiRandom';
-import { addInProgressRecipes } from '../services/InProgressStorage';
 
 import RecipesContext from './RecipesContext';
 
@@ -31,10 +30,6 @@ function RecipesProvider({ children }) {
   const [randomFood, setRandomFood] = useState([]);
   const [randomDrink, setRandomDrink] = useState([]);
   const [inProgressMeals, setInProgressMeals] = useState({});
-
-  useEffect(() => {
-    addInProgressRecipes(inProgressMeals, 'meals');
-  }, [inProgressMeals]);
 
   async function getApiFoods() {
     const { meals } = await getFoods();

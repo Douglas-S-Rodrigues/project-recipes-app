@@ -18,15 +18,17 @@ function BtnFoodDetails({ arrayMeasure, id, arrayIngredients }) {
       setValidBtn(true);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [inProgressMeals]);
 
   const handleClick = () => {
-    setIngredients(arrayIngredients);
-    setMeasure(arrayMeasure);
-    setInProgressMeals({
-      ...inProgressMeals,
-      meals: { ...inProgressMeals.meals, [id]: [] },
-    });
+    if (!validBtn) {
+      setIngredients(arrayIngredients);
+      setMeasure(arrayMeasure);
+      setInProgressMeals({
+        ...inProgressMeals,
+        meals: { ...inProgressMeals.meals, [id]: [] },
+      });
+    }
     history.push(`/foods/${id}/in-progress`);
   };
 
@@ -37,7 +39,7 @@ function BtnFoodDetails({ arrayMeasure, id, arrayIngredients }) {
       data-testid="start-recipe-btn"
       onClick={ handleClick }
     >
-      { !validBtn ? 'Iniciar receita' : 'Continuar receita' }
+      { validBtn ? 'Continue Recipe' : 'Start Recipe'}
     </button>
   );
 }

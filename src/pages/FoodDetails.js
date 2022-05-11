@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams /* useHistory */ } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
@@ -22,7 +23,7 @@ function FoodsDetails() {
   const [favorite, setFavorite] = useState(false);
   const [detailFoods, setDetailFoods] = useState({});
   const [link, setLink] = useState(false);
-  const [btnValid, setBtnValid] = useState(true);
+  const [btnValid, setBtnValid] = useState(false);
 
   const arrayIngredients = filterIngredients();
   const arrayMeasure = filterMeasure();
@@ -60,7 +61,7 @@ function FoodsDetails() {
 
   useEffect(() => {
     const recipe = getRecipeDoneStorage();
-    const valid = recipe.some((item) => (item.id === id));
+    const valid = recipe.some((item) => (item.id === [id]));
     setBtnValid(valid);
   }, []);
 
