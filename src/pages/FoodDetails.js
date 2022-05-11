@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams /* useHistory */ } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import { addFavorites, getFavorites,
   removeFavorites } from '../services/favoriteStorage';
@@ -9,20 +9,21 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CardDrinks from '../Components/CardDrinks';
 import '../Components/DetailsPage.css';
+import BtnFoodDetails from '../Components/btnFoodDetails';
+import { getRecipeDoneStorage } from '../services/recipeDoneStorage';
 
 const copy = require('clipboard-copy');
 
 function FoodsDetails() {
   const { id } = useParams();
-  const history = useHistory();
-  const { foodsDetails, getApiFoodsDetails, setIngredients,
-    filterMeasure, filterIngredients, setMeasure, setInProgress,
-    inProgress,
+  const { foodsDetails, getApiFoodsDetails,
+    filterMeasure, filterIngredients,
   } = useContext(RecipesContext);
 
   const [favorite, setFavorite] = useState(false);
   const [detailFoods, setDetailFoods] = useState({});
   const [link, setLink] = useState(false);
+  const [btnValid, setBtnValid] = useState(true);
 
   const arrayIngredients = filterIngredients();
   const arrayMeasure = filterMeasure();
@@ -57,15 +58,11 @@ function FoodsDetails() {
     }
   };
 
-  const handleClick = () => {
-    setIngredients(arrayIngredients);
-    setMeasure(arrayMeasure);
-    setInProgress({
-      ...inProgress,
-      meals: { ...inProgress.meals, [id]: [] },
-    });
-    history.push(`/foods/${id}/in-progress`);
-  };
+  useEffect(() => {
+    const recipe = getRecipeDoneStorage();
+    const valid = recipe.some((item) => (item.id === id));
+    setBtnValid(valid);
+  }, []);
 
   useEffect(() => {
     getApiFoodsDetails(id);
@@ -153,16 +150,14 @@ function FoodsDetails() {
         <h4>Recomedadas</h4>
         <CardDrinks />
       </div>
-
-      <button
-        type="button"
-        className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
-        data-testid="start-recipe-btn"
-        onClick={ handleClick }
-      >
-        Iniciar receita
-      </button>
-
+      { !btnValid
+        ? (
+          <BtnFoodDetails
+            arrayIngredients={ arrayIngredients }
+            arrayMeasure={ arrayMeasure }
+            id={ id }
+          />)
+        : ''}
     </div>
   );
 }

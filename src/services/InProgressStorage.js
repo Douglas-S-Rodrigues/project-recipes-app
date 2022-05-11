@@ -1,22 +1,20 @@
-export function addInProgressRecipes(recipes) {
+export function addInProgressRecipes(recipes, type) {
   const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
-  const newInProgress = { ...inProgress, ...recipes };
+  const newInProgress = {
+    ...inProgress, [type]: { ...inProgress[type], ...recipes[type] } };
   localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
 }
 
-export function removeInProgressItem(ingredient, type, id) {
-  const item = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
-  const newItem = item.filter((i) => i[type][id] !== ingredient);
+export function removeInProgressItem(id, type) {
+  const itens = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
+  const newItem = Object.keys(itens[type]).filter((item) => item.id !== id);
+  delete newItem.meals.id;
   localStorage.setItem('inProgressRecipes', JSON.stringify(newItem));
 }
 
-/* export const removeFavorites = (id) => {
-  const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-  const newFavorites = favorites.filter((recipe) => recipe.id !== id);
-  localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+export const getInProgressRecipes = () => {
+  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || {
+    cocktails: {}, meals: {},
+  };
+  return inProgressRecipes;
 };
-
-export const getFavorites = () => {
-  const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-  return favorites;
-}; */

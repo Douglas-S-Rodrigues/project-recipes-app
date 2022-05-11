@@ -5,13 +5,13 @@ import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
 import { addRecipeDoneStorage } from '../services/recipeDoneStorage';
-/* import { removeInProgressItem } from '../services/InProgressStorage'; */
+import { removeInProgressItem } from '../services/InProgressStorage';
 
 function RecipesProgress() {
   const { id } = useParams();
   const history = useHistory();
   const {
-    foodsDetails, ingredients, measure, inProgress, setInProgress,
+    foodsDetails, ingredients, measure, inProgressMeals, setInProgressMeals,
   } = useContext(RecipesContext);
   const [check, setCheckedState] = useState(new Set());
   const [btnStatus, setBtnStatus] = useState(false);
@@ -44,6 +44,9 @@ function RecipesProgress() {
       tags: [foodsDetails.strTags],
     };
     addRecipeDoneStorage('meals', doneRecipes);
+    removeInProgressItem([id]);
+    /* const itens = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    console.log(Object.keys(itens.meals)); */
     history.push('/done-recipes');
   };
 
@@ -51,14 +54,14 @@ function RecipesProgress() {
     const newSelectedItems = new Set(check);
     if (!newSelectedItems.has(index)) {
       newSelectedItems.add(index);
-      setInProgress({
-        ...inProgress,
+      setInProgressMeals({
+        ...inProgressMeals,
         meals: {
-          ...inProgress.meals, [id]: [...inProgress.meals[id], ingredients[index]] },
+          ...inProgressMeals.meals,
+          [id]: [...inProgressMeals.meals[id], ingredients[index]] },
       });
     } else {
       newSelectedItems.delete(index);
-      /* removeInProgressItem(ingredients[index], meals, [id]); */
     }
     setCheckedState(newSelectedItems);
     buttonDisabled();
