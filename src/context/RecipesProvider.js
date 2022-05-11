@@ -30,11 +30,11 @@ function RecipesProvider({ children }) {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [randomFood, setRandomFood] = useState([]);
   const [randomDrink, setRandomDrink] = useState([]);
-  const [inProgress, setInProgress] = useState({});
+  const [inProgressMeals, setInProgressMeals] = useState({});
 
   useEffect(() => {
-    addInProgressRecipes(inProgress);
-  }, [inProgress]);
+    addInProgressRecipes(inProgressMeals, 'meals');
+  }, [inProgressMeals]);
 
   async function getApiFoods() {
     const { meals } = await getFoods();
@@ -212,8 +212,8 @@ function RecipesProvider({ children }) {
     filterMeasure,
     filterIngredientsDrinks,
     filterMeasureDrinks,
-    inProgress,
-    setInProgress,
+    inProgressMeals,
+    setInProgressMeals,
   };
 
   return (
