@@ -1,26 +1,37 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import RecipesContext from '../context/RecipesContext';
 import shareIcon from '../images/shareIcon.svg';
 import heartIcon from '../images/whiteHeartIcon.svg';
-import { addRecipeDoneStorage } from '../services/recipeDoneStorage';
-import { removeInProgressItem } from '../services/InProgressStorage';
 
-function RecipesProgress() {
+function DrinksProgress() {
   const { id } = useParams();
-  const history = useHistory();
-  const {
-    foodsDetails, inProgressMeals, setInProgressMeals, getApiFoodsDetails,
-    filterMeasure, filterIngredients,
-  } = useContext(RecipesContext);
+  const { drinksDetails, getApiDrinksDetails } = useContext(RecipesContext);
   const [check, setCheckedState] = useState(new Set());
   const [btnStatus, setBtnStatus] = useState(false);
+  const details = Object.keys(drinksDetails);
 
-  useEffect(() => {
-    getApiFoodsDetails(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const filterIngredients = () => {
+    const ingredientsFilter = [];
+    details.forEach((ingredient) => {
+      if (ingredient.includes('strIngredient') && drinksDetails[ingredient]) {
+        ingredientsFilter.push(drinksDetails[ingredient]);
+      }
+    });
+    return ingredientsFilter;
+  };
+
+  const filterMeasure = () => {
+    const measureFilter = [];
+    details.forEach((measure) => {
+      if (measure.includes('strMeasure')) {
+        measureFilter.push(drinksDetails[measure]);
+      }
+    });
+    const newMeasureFilter = measureFilter.filter((measure) => measure !== ' ');
+    return newMeasureFilter;
+  };
 
   const buttonDisabled = () => {
     const elements = document.getElementsByName('checkbox');
@@ -37,59 +48,39 @@ function RecipesProgress() {
     });
   };
 
-  const handleClick = () => {
-    const doneRecipes = {
-      id,
-      type: 'food',
-      nationality: foodsDetails.strArea,
-      category: foodsDetails.strCategory,
-      alcoholicOrNot: '',
-      name: foodsDetails.strMeal,
-      image: foodsDetails.strMealThumb,
-      doneDate: new Date().toLocaleString(),
-      tags: [foodsDetails.strTags],
-    };
-    addRecipeDoneStorage('meals', doneRecipes);
-    removeInProgressItem([id]);
-    /* const itens = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    console.log(Object.keys(itens.meals)); */
-    history.push('/done-recipes');
-  };
-
-  const handleOnChange = (index) => {
+  const handleOnChange = (itemKey) => {
     const newSelectedItems = new Set(check);
-    if (!newSelectedItems.has(index)) {
-      newSelectedItems.add(index);
-      setInProgressMeals({
-        ...inProgressMeals,
-        meals: {
-          ...inProgressMeals.meals,
-          [id]: [...inProgressMeals.meals[id], ingredients[index]] },
-      });
+    if (!newSelectedItems.has(itemKey)) {
+      newSelectedItems.add(itemKey);
     } else {
-      newSelectedItems.delete(index);
+      newSelectedItems.delete(itemKey);
     }
     setCheckedState(newSelectedItems);
     buttonDisabled();
   };
 
+  useEffect(() => {
+    getApiDrinksDetails(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <img
-        src={ foodsDetails.strMealThumb }
-        alt={ foodsDetails.strMeal }
+        src={ drinksDetails.strDrinkThumb }
+        alt={ drinksDetails.strDrink }
         data-testid="recipe-photo"
         width="200"
-        height="200"
+        heigth="200"
       />
-      <h2 data-testid="recipe-title">{ foodsDetails.strMeal }</h2>
+      <h2 data-testid="recipe-title">{ drinksDetails.strDrink }</h2>
       <button type="button">
         <img src={ shareIcon } alt="shareIcon" data-testid="share-btn" />
       </button>
       <button type="button">
         <img src={ heartIcon } alt="heartIcon" data-testid="favorite-btn" />
       </button>
-      <h4 data-testid="recipe-category">{ foodsDetails.strCategory }</h4>
+      <h4 data-testid="recipe-category">{ drinksDetails.strCategory }</h4>
       <ul>
         <h3>Ingredients</h3>
         <div className="d-flex flex-column">
@@ -113,13 +104,12 @@ function RecipesProgress() {
         </div>
       </ul>
       <h4>Instruções</h4>
-      <p data-testid="instructions">{ foodsDetails.strInstructions }</p>
+      <p data-testid="instructions">{ drinksDetails.strInstructions }</p>
       <button
         type="button"
         className="w-100 fixed-bottom p-2 btn btn-success start-recipe"
         data-testid="finish-recipe-btn"
         disabled={ btnStatus }
-        onClick={ handleClick }
       >
         Finalizar receita
       </button>
@@ -127,4 +117,4 @@ function RecipesProgress() {
   );
 }
 
-export default RecipesProgress;
+export default DrinksProgress;

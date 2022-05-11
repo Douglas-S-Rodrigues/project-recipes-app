@@ -20,12 +20,14 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import NotFound from './pages/NotFound';
 import RecipesProgress from './pages/RecipesProgress';
+import DrinksProgress from './pages/DrinksProgress';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <RecipesProvider>
+          <Route exact path="/drinks/:id/in-progress" component={ DrinksProgress } />
           <Route exact path="/foods/:id/in-progress" component={ RecipesProgress } />
           <Route exact path="/drinks/:id" component={ DrinksDetails } />
           <Route exact path="/foods/:id" component={ FoodDetails } />
