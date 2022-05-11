@@ -61,7 +61,7 @@ function FoodsDetails() {
 
   useEffect(() => {
     const recipe = getRecipeDoneStorage();
-    const valid = recipe.some((item) => (item.id === [id]));
+    const valid = recipe.some((item) => (item.id === id));
     setBtnValid(valid);
   }, []);
 
@@ -156,6 +156,7 @@ function FoodsDetails() {
             arrayIngredients={ arrayIngredients }
             arrayMeasure={ arrayMeasure }
             id={ id }
+            type="meals"
           />)
         : ''}
     </div>

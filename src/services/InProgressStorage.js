@@ -5,10 +5,9 @@ export function addInProgressRecipes(recipes, type) {
   localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
 }
 
-export function removeInProgressItem(id) {
-  const itens = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
-  delete itens.meals[id];
+export function removeInProgressItem(id, type) {
   const newItem = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  delete newItem[type][id];
   localStorage.setItem('inProgressRecipes', JSON.stringify(newItem));
 }
 

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import { addFavorites, getFavorites,
   removeFavorites } from '../services/favoriteStorage';
@@ -8,18 +9,20 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CardFoods from '../Components/CardFoods';
 import '../Components/DetailsPage.css';
+import BtnFoodDetails from './btnDrinksDetails';
+import { getRecipeDoneStorage } from '../services/recipeDoneStorage';
 
 const copy = require('clipboard-copy');
 
 function DrinksDetails() {
   const { id } = useParams();
-  const history = useHistory();
   const { drinksDetails, getApiDrinksDetails,
     filterIngredientsDrinks, filterMeasureDrinks } = useContext(RecipesContext);
 
   const [favorite, setFavorite] = useState(false);
   const [detailsDrinks, setDetailsDrinks] = useState({});
   const [link, setLink] = useState(false);
+  const [btnValid, setBtnValid] = useState(false);
 
   const copyMsg = 'Link copied!';
 
@@ -57,13 +60,15 @@ function DrinksDetails() {
   const arrayMeasure = filterMeasureDrinks();
 
   useEffect(() => {
+    const drinks = getRecipeDoneStorage();
+    const valid = drinks.some((item) => (item.id === id));
+    setBtnValid(valid);
+  }, []);
+
+  useEffect(() => {
     getApiDrinksDetails(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleClick = () => {
-    history.push(`/drinks/${id}/in-progress`);
-  };
 
   function getLinkToShare() {
     setLink(true);
@@ -125,14 +130,17 @@ function DrinksDetails() {
         <h4>Recomedadas</h4>
         <CardFoods />
       </div>
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        onClick={ handleClick }
-        className="w-100 fixed-bottom p-2 btn btn-success"
-      >
-        Iniciar receita
-      </button>
+      {
+        !btnValid
+          ? (
+            <BtnFoodDetails
+              arrayIngredients={ arrayIngredients }
+              arrayMeasure={ arrayMeasure }
+              id={ id }
+              type="cocktails"
+            />)
+          : ''
+      }
     </div>
   );
 }

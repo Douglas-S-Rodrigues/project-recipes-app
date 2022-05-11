@@ -49,9 +49,7 @@ function RecipesProgress() {
       tags: [foodsDetails.strTags],
     };
     addRecipeDoneStorage('meals', doneRecipes);
-    removeInProgressItem([id]);
-    const itens = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    console.log('localStorage:', itens);
+    removeInProgressItem(id, 'meals');
     history.push('/done-recipes');
   };
 
@@ -120,7 +118,7 @@ function RecipesProgress() {
         disabled={ btnStatus }
         onClick={ handleClick }
       >
-        Finalizar receita
+        Finish recipe
       </button>
     </div>
   );

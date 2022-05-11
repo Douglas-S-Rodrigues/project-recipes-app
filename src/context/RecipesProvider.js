@@ -30,6 +30,7 @@ function RecipesProvider({ children }) {
   const [randomFood, setRandomFood] = useState([]);
   const [randomDrink, setRandomDrink] = useState([]);
   const [inProgressMeals, setInProgressMeals] = useState({});
+  const [inProgressCocktails, setInProgressCocktails] = useState({});
 
   async function getApiFoods() {
     const { meals } = await getFoods();
@@ -209,6 +210,8 @@ function RecipesProvider({ children }) {
     filterMeasureDrinks,
     inProgressMeals,
     setInProgressMeals,
+    inProgressCocktails,
+    setInProgressCocktails,
   };
 
   return (

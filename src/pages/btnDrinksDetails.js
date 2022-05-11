@@ -7,27 +7,28 @@ import { getInProgressRecipes } from '../services/InProgressStorage';
 function BtnFoodDetails({ arrayMeasure, id, arrayIngredients }) {
   const history = useHistory();
   const {
-    inProgressMeals, setInProgressMeals, setMeasure, setIngredients,
+    inProgressCocktails, setInProgressCocktails, setMeasure, setIngredients,
   } = useContext(RecipesContext);
 
   const [validBtn, setValidBtn] = useState(false);
 
   useEffect(() => {
     const inProgressRecipes = getInProgressRecipes();
-    if (inProgressRecipes.meals[id] && inProgressRecipes.meals[id] !== undefined) {
+    if (inProgressRecipes.cocktails[id]
+        && inProgressRecipes.cocktails[id] !== undefined) {
       setValidBtn(true);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inProgressMeals]);
+  }, [inProgressCocktails]);
 
   const handleClick = () => {
     setIngredients(arrayIngredients);
     setMeasure(arrayMeasure);
-    setInProgressMeals({
-      ...inProgressMeals,
-      meals: { ...inProgressMeals.meals, [id]: [] },
+    setInProgressCocktails({
+      ...inProgressCocktails,
+      cocktails: { ...inProgressCocktails.cocktails, [id]: [] },
     });
-    history.push(`/foods/${id}/in-progress`);
+    history.push(`/drinks/${id}/in-progress`);
   };
 
   return (
