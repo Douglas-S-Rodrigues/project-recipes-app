@@ -20,7 +20,9 @@ function Foods() {
   return (
     <>
       <Header title="Foods" handleSearch={ handleSearch } searchRender />
-      { disableInput ? <SearchBar /> : <FoodCategoryButton /> }
+      <div>
+        { disableInput ? <SearchBar /> : <FoodCategoryButton /> }
+      </div>
       <FoodsRecipes />
       <Footer />
     </>
