@@ -13,6 +13,9 @@ O layout foi desenvolvido inicialmente para mobile.
 # Stacks utilizadas
 
 Front-end: React.js, React Hooks, Context API.
+
+### Para iniciar o app: npm start
+
 ## Autores
 
 - [Douglas Rodrigues](https://www.github.com/Douglas-S-Rodrigues)
